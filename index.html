@@ -49,7 +49,8 @@ h1{font:600 clamp(32px,5vw,46px)/1 var(--font-display);letter-spacing:.01em;marg
 .stage-views{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);background:var(--stage)}
 .view{min-width:0;display:flex;flex-direction:column}
 .view-label{font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 12px 0}
-.view svg{display:block;width:100%;height:auto;max-height:26vh}
+.view svg{display:block;width:100%;height:auto;max-height:19vh}
+.view-label{padding-top:8px}
 .readout{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
 .pill{display:inline-flex;align-items:center;white-space:nowrap;font:500 12px/1 var(--font-mono);padding:6px 9px;border-radius:999px;background:var(--chip);color:var(--ink);font-variant-numeric:tabular-nums}
 .pill.ok{background:var(--ok-soft);color:var(--ok)}
@@ -594,20 +595,17 @@ footer p{margin:0}
   function readoutHTML(s, g){
     const w = getW(s.watchKey);
     const pills = [];
+    const capPill = g.fit.n ? '<span class="pill ' + capClass(g.fit.cap) + '">Huruf ' + mm(g.fit.cap) + ' mm, ' + capText(g.fit.cap) + '</span>' : '<span class="pill warn">Belum ada teks</span>';
     if(isWatch(s)){
-      pills.push('<span class="pill">Lebar ' + s.width + ' mm</span>');
       const stt = statusFor(s.width, w && (w.w === s.width || w.b === 'Apple') ? w : null);
-      pills.push('<span class="pill ' + stt.k + '">' + esc(stt.t) + '</span>');
+      pills.push('<span class="pill ' + stt.k + '">' + esc(stt.t) + '</span>', capPill);
+      pills.push('<span class="pill">Lebar ' + s.width + ' mm</span>');
       pills.push('<span class="pill">' + (s.shape === 'slot' ? 'Pelat ' + mm(g.w) + ' x 22 mm, perkiraan' : 'Tag ' + mm(g.w) + ' x 10 mm') + '</span>');
     } else if(s.shape === 'shoe'){
-      pills.push('<span class="pill">Shoe Tag 30 x 10 mm</span>');
-      pills.push('<span class="pill ok">Satu ukuran</span>');
+      pills.push('<span class="pill ok">Satu ukuran</span>', capPill, '<span class="pill">Shoe Tag 30 x 10 mm</span>');
     } else {
-      pills.push('<span class="pill">Plat 29 x 20 mm</span>');
-      pills.push('<span class="pill warn">Pembanding</span>');
+      pills.push('<span class="pill warn">Pembanding</span>', capPill, '<span class="pill">Plat 29 x 20 mm</span>');
     }
-    if(g.fit.n) pills.push('<span class="pill ' + capClass(g.fit.cap) + '">Huruf ' + mm(g.fit.cap) + ' mm, ' + capText(g.fit.cap) + '</span>');
-    else pills.push('<span class="pill warn">Belum ada teks</span>');
     return pills.join('');
   }
 
