@@ -1,4 +1,4 @@
-const CACHE = 'lifetag-konfigurator-v1';
+const CACHE = 'lifetag-konfigurator-v2';
 const CORE = ['./', './index.html', './lebar-strap-jam.csv', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -35,7 +35,7 @@ self.addEventListener('fetch', e => {
   e.respondWith((async () => {
     const c = await caches.open(CACHE);
     try {
-      const res = await Promise.race([fetch(req), timeout(4000)]);
+      const res = await Promise.race([fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }), timeout(4000)]);
       if (res && res.ok) { c.put(req, res.clone()); return res; }
     } catch (err) {}
     const hit = await c.match(req, { ignoreSearch: true });
