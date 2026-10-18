@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#D24E0E">
+<title>Konfigurator LifeTag</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow+Semi+Condensed:wght@700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@700&family=Roboto+Condensed:wght@700&display=swap">
+<style>
+/* Layout: workbench. Sticky preview stage (close-up + on-wrist view) beside a stack of control panels; one column on phones with a compact sticky stage. */
+:root{
+  --bg:#EDEFED; --surface:#FFFFFF; --stage:#D9DEDC; --ink:#15181B; --muted:#596067; --line:#D0D5D3; --chip:#E3E7E5;
+  --accent:#D24E0E; --accent-ink:#A23B09; --accent-soft:#FAE1D3; --on-accent:#FFFFFF;
+  --ok:#2C7649; --ok-soft:#D9EEE1; --warn:#935D00; --warn-soft:#F6E8C8; --bad:#AE2629; --bad-soft:#F7DADA;
+  --font-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#101315; --surface:#181C1F; --stage:#363D42; --ink:#ECEEEF; --muted:#A2A9AF; --line:#2B3135; --chip:#232A2E;
+    --accent:#FF7C40; --accent-ink:#FF9D6F; --accent-soft:#3B2218; --on-accent:#1C0D05;
+    --ok:#63C990; --ok-soft:#173427; --warn:#E5AE48; --warn-soft:#3A2E13; --bad:#F2777A; --bad-soft:#3E1B1C;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--font-body)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;margin-bottom:16px}
+.eyebrow{font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+h1{font:600 clamp(32px,5vw,46px)/1 var(--font-display);letter-spacing:.01em;margin:8px 0 6px;text-wrap:balance}
+.sub{color:var(--muted);margin:0;max-width:62ch}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--accent)}
+.layout{display:grid;gap:16px}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.stage-views{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);background:var(--stage)}
+.view{min-width:0;display:flex;flex-direction:column}
+.view-label{font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 12px 0}
+.view svg{display:block;width:100%;height:auto;max-height:26vh}
+.readout{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.pill{display:inline-flex;align-items:center;white-space:nowrap;font:500 12px/1 var(--font-mono);padding:6px 9px;border-radius:999px;background:var(--chip);color:var(--ink);font-variant-numeric:tabular-nums}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.stage-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 12px 12px}
+.btn{font:500 14px/1 var(--font-body);padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:40px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.small{min-height:32px;padding:7px 10px;font-size:13px}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.controls{display:grid;gap:12px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px 16px;display:grid;gap:10px;min-width:0}
+.panel h2{font:600 21px/1.1 var(--font-display);letter-spacing:.02em;margin:0;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 10px}
+.panel h2 small{font:400 12.5px/1.3 var(--font-body);color:var(--muted);letter-spacing:0}
+.minilabel{font:500 11px/1 var(--font-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 14px/1.1 var(--font-body);padding:9px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:7px;text-align:left}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+.seg button .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.swatch{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.28);flex:none}
+.tagchip{font:500 10px/1 var(--font-mono);letter-spacing:.05em;text-transform:uppercase;padding:3px 5px;border-radius:4px;background:var(--chip);color:var(--muted)}
+.tagchip.mvp{background:var(--ok-soft);color:var(--ok)}
+.tagchip.next{background:var(--warn-soft);color:var(--warn)}
+input[type=text],input[type=search]{width:100%;min-width:0;font:500 16px/1.2 var(--font-body);padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.results{list-style:none;margin:6px 0 0;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.results li button{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:center;text-align:left;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;font:400 14px/1.3 var(--font-body)}
+.results li:last-child button{border-bottom:0}
+.results li button:hover,.results li button.active{background:var(--accent-soft)}
+.r-name{min-width:0;font-weight:500}
+.r-meta{grid-column:1/-1;font:12px/1.3 var(--font-mono);color:var(--muted)}
+.r-w{font:600 16px/1 var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.empty-res{padding:10px 12px;color:var(--muted);font-size:14px}
+.picked{display:grid;gap:6px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px dashed var(--line)}
+.picked-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.picked-name{font-weight:600}
+.note{font-size:13px;color:var(--muted);margin:0}
+.note.warn{color:var(--warn)}
+.note a,footer a{color:var(--accent-ink)}
+.line-field{display:grid;gap:6px}
+.line-field label{display:flex;justify-content:space-between;gap:8px;font:500 11px/1 var(--font-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.count{font-variant-numeric:tabular-nums}
+.count.over{color:var(--bad)}
+.lines{display:grid;gap:10px}
+.presets{display:grid;gap:10px}
+.preset-group{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.preset-group .minilabel{width:100%;margin:0}
+.chipbtn{font:600 12px/1 var(--font-mono);letter-spacing:.03em;padding:9px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:34px}
+.row{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.wide{margin-top:16px}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.pin{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);display:grid;align-content:start}
+.pin svg{display:block;width:100%;height:auto;background:var(--stage)}
+.pin .meta{padding:9px 10px 10px;font-size:12.5px;color:var(--muted);display:grid;gap:3px}
+.pin .meta b{color:var(--ink);font-weight:600;font-size:13px}
+.scrollx{overflow-x:auto;max-width:100%}
+.scrollx svg{display:block}
+input[type=range]{width:100%;accent-color:var(--accent)}
+footer{margin-top:20px;color:var(--muted);font-size:13px;display:grid;gap:6px;max-width:80ch}
+footer p{margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (min-width:920px){
+  .layout{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start}
+  .stage{top:calc(env(safe-area-inset-top,0px) + 12px)}
+  .view svg{max-height:52vh}
+  .readout{flex-wrap:wrap;overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">LifeTag · mockup tag grafir</div>
+      <h1>Konfigurator LifeTag</h1>
+      <p class="sub">Cari jam, ketik teks, pilih finishing. Semua ukuran dalam milimeter.</p>
+    </div>
+    <div class="row">
+      <label class="toggle" for="wake"><input type="checkbox" id="wake"> Layar tetap nyala</label>
+      <span class="note" id="wake-note"></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="stage" aria-label="Pratinjau tag">
+      <div class="stage-views">
+        <div class="view"><div class="view-label" id="lbl-close">Close-up</div><div id="v-close"></div></div>
+        <div class="view"><div class="view-label" id="lbl-ctx">Di jam</div><div id="v-ctx"></div></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <div class="stage-actions">
+        <button class="btn primary small" id="pin-btn" type="button">Simpan ke perbandingan</button>
+        <button class="btn small" id="copy-btn" type="button">Salin ringkasan</button>
+        <span class="note" id="action-note" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <div class="controls">
+      <section class="panel" aria-labelledby="h-watch">
+        <h2 id="h-watch">Jam <small>cari model, lebar strap terisi otomatis</small></h2>
+        <div>
+          <label class="sr" for="watch-q">Cari model jam</label>
+          <input type="search" id="watch-q" placeholder="Contoh: 265, fenix 8, pace 3, galaxy watch 7" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="watch-results" aria-autocomplete="list">
+          <ul class="results" id="watch-results" role="listbox" hidden></ul>
+        </div>
+        <p class="note" id="data-note">Memuat data jam...</p>
+        <div id="picked"></div>
+        <div>
+          <div class="minilabel">Atau pilih lebar strap</div>
+          <div class="seg" id="width-seg"></div>
+        </div>
+        <p class="note" id="width-note"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="h-shape">
+        <h2 id="h-shape">Bentuk</h2>
+        <div class="seg" id="shape-seg"></div>
+        <p class="note" id="shape-note"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="h-text">
+        <h2 id="h-text">Teks <small id="text-hint"></small></h2>
+        <div class="lines" id="lines"></div>
+        <div class="row">
+          <label class="toggle" for="upper"><input type="checkbox" id="upper"> Huruf kapital semua</label>
+          <label class="toggle" for="two" id="two-wrap"><input type="checkbox" id="two"> 2 baris (Plus)</label>
+          <button class="chipbtn" id="heart-btn" type="button">Tambah ♥</button>
+        </div>
+        <div class="presets" id="presets"></div>
+        <p class="note warn" id="char-note"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="h-finish">
+        <h2 id="h-finish">Finishing <small>warna layar mendekati, bukan warna asli</small></h2>
+        <div class="seg" id="finish-seg"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-font">
+        <h2 id="h-font">Font grafir <small>kandidat dari spesifikasi</small></h2>
+        <div class="seg" id="font-seg"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-strap">
+        <h2 id="h-strap">Warna strap atau tali</h2>
+        <div class="seg" id="strap-seg"></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="panel wide" aria-labelledby="h-compare">
+    <h2 id="h-compare">Perbandingan <small>tersimpan di perangkat ini, maksimal 6</small></h2>
+    <div class="compare-grid" id="pins"></div>
+    <p class="note" id="pins-empty">Belum ada yang disimpan. Tekan "Simpan ke perbandingan" untuk menaruh beberapa versi berdampingan, misalnya silver vs black, atau 1 baris vs 2 baris.</p>
+  </section>
+
+  <section class="panel wide" aria-labelledby="h-real">
+    <h2 id="h-real">Ukuran asli di layar <small>kalibrasi sekali per perangkat</small></h2>
+    <p class="note">Tempel kartu ATM atau KTP ke layar, lalu geser slider sampai kotak di bawah pas dengan tepi kartu. Setelah itu tag ditampilkan seukuran aslinya, berguna untuk cek apakah teks masih kebaca.</p>
+    <label class="sr" for="ppm">Skala layar</label>
+    <input type="range" id="ppm" min="2" max="10" step="0.01">
+    <div class="scrollx" id="card-wrap"></div>
+    <div class="scrollx" id="real-wrap"></div>
+  </section>
+
+  <footer>
+    <p>Lebar strap per model dari spek pabrikan dan daftar kompatibilitas, dicek 18 Okt 2026 (<a href="lebar-strap-jam.csv">lihat data</a>). Label "lemah, ukur" artinya sumbernya lemah. Strap yang bukan bawaan selalu diukur pakai penggaris.</p>
+    <p>Watch Tag lebar 20, 22, dan 26 mm dan brushed silver masuk tahap pertama. Batas karakter per baris masih sementara. Tinggi huruf minimal 2,2 mm supaya kebaca orang lain.</p>
+    <p>Setelah sekali dibuka, halaman ini tetap jalan tanpa sinyal.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const MVP_WIDTHS = [20,22,26];
+  const WIDTHS = [18,20,22,24,26];
+  const CHAR_LIMIT = {18:12,20:14,22:16,24:17,26:18};
+  const SHOE_LIMIT = 16, PLATE_LIMIT = 24;
+  const FACE_H = 10, WALL = 0.8, MIN_CAP = 2.2;
+  const ALLOWED = /[^A-Za-z0-9 +\-.\/:!♥]/g;
+
+  const FONTS = [
+    {id:'barlow', label:'Barlow', css:'"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif', key:'"Barlow Semi Condensed"', w:700, cap:0.70, ls:0.04},
+    {id:'inter', label:'Inter', css:'Inter,Arial,sans-serif', key:'Inter', w:700, cap:0.727, ls:0.02},
+    {id:'roboto', label:'Roboto Condensed', css:'"Roboto Condensed","Arial Narrow",Arial,sans-serif', key:'"Roboto Condensed"', w:700, cap:0.711, ls:0.03}
+  ];
+  const FINISHES = [
+    {id:'brushed', label:'Brushed silver', status:'mvp', tag:'MVP', base:'#C3C7CA', hi:'#E6E8EA', lo:'#9A9FA4', ink:'#2B2E32', edge:'#858A8F'},
+    {id:'black', label:'Black PVD', status:'next', tag:'Menyusul', base:'#25272A', hi:'#3D4044', lo:'#141517', ink:'#D3D6D9', edge:'#0C0D0E'},
+    {id:'gold', label:'Gold PVD', status:'idea', tag:'Ide', base:'#C6A157', hi:'#E7CC88', lo:'#9C7A37', ink:'#2D2210', edge:'#86672B'},
+    {id:'rose', label:'Rose gold PVD', status:'idea', tag:'Ide', base:'#CE9A86', hi:'#EAC4B4', lo:'#A6715E', ink:'#38221A', edge:'#915D4B'}
+  ];
+  const STRAPS = [
+    {id:'black', label:'Hitam', c:'#26292C'},
+    {id:'grey', label:'Abu', c:'#767B80'},
+    {id:'white', label:'Putih', c:'#ECEBE6'},
+    {id:'navy', label:'Navy', c:'#243250'},
+    {id:'orange', label:'Oranye', c:'#E1622B'}
+  ];
+  const SHAPES = [
+    {id:'watch', label:'Watch Tag', note:'Selongsong 316L yang diselipkan ke strap jam. Tinggi 10 mm, lebar mengikuti strap.'},
+    {id:'slot', label:'Watch Tag dua slot', note:'Usulan: pelat datar tanpa tekuk, lebar strap + 3 mm. Strap masuk turun lewat slot atas dan naik lewat slot bawah. Panjang 22 mm masih perkiraan: slot 3 mm, area teks 10 mm.'},
+    {id:'shoe', label:'Shoe Tag', note:'Pelat datar sekitar 30 x 10 mm dengan dua slot tali. Satu ukuran untuk semua sepatu, 1 baris.'},
+    {id:'plate', label:'Plat darurat', note:'Pembanding: plat 29 x 20 mm dengan 6 baris info darurat, model yang sudah banyak dijual. Bukan produk kita.'}
+  ];
+  const PRESETS = [
+    ['Target', ['SUB 4','SUB 2','PB HUNTER','FIRST FM']],
+    ['Mantra', ['JANGAN NYERAH','SATU LANGKAH LAGI','KUAT','PELAN TAPI SAMPAI']],
+    ['Untuk orang', ['UNTUK IBU','BUAT AYAH','KAMU BISA']],
+    ['Identitas', ['NAMA CREW','JRF 2026']]
+  ];
+  const PLATE_DEFAULT = ['NAMA LENGKAP','JAKARTA 1990','GOL. DARAH O+','ALERGI: TIDAK ADA','ICE: NAMA 08XX XXXX XXXX','ICE: NAMA 08XX XXXX XXXX'];
+  const DEFAULT = {shape:'watch', width:22, watchKey:null, finish:'brushed', font:'barlow', strap:'black', two:true, upper:true, watchLines:['SUB 4','JRF 2026'], shoeLine:'KAMU BISA', plateLines:PLATE_DEFAULT.slice(), focusLine:0};
+  const STORE = 'lifetag.cfg.v2', PINS = 'lifetag.cfg.pins.v2', PPM = 'lifetag.cfg.ppm.v1';
+
+  function norm(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
+  let WL = [], WMAP = {}, dataState = 'loading';
+  function parseCSV(text){
+    const rows = []; let row = [], f = '', q = false;
+    for(let i = 0; i < text.length; i++){
+      const ch = text[i];
+      if(q){ if(ch === '"'){ if(text[i+1] === '"'){ f += '"'; i++; } else q = false; } else f += ch; }
+      else if(ch === '"') q = true;
+      else if(ch === ','){ row.push(f); f = ''; }
+      else if(ch === '\n'){ row.push(f); rows.push(row); row = []; f = ''; }
+      else if(ch !== '\r') f += ch;
+    }
+    if(f.length || row.length){ row.push(f); rows.push(row); }
+    return rows;
+  }
+  function setData(text){
+    const rows = parseCSV(text.replace(/^﻿/, ''));
+    const head = (rows.shift() || []).map(h => h.trim().toLowerCase());
+    const ix = n => head.indexOf(n);
+    const get = (r, n) => { const i = ix(n); return i >= 0 ? (r[i] || '').trim() : ''; };
+    WL = []; WMAP = {};
+    rows.forEach(r => {
+      const b = get(r, 'merek'), m = get(r, 'model');
+      if(!b || !m) return;
+      const raw = get(r, 'lebar_strap_mm').replace(',', '.');
+      let w = raw === '' ? null : Number(raw);
+      if(w != null && !isFinite(w)) w = null;
+      const item = {b:b, m:m, v:get(r, 'varian'), w:w, att:get(r, 'pemasangan'), conf:get(r, 'keyakinan'), al:get(r, 'alias').split('|').filter(Boolean), src:get(r, 'sumber')};
+      item.key = b + '|' + m + '|' + item.v;
+      if(WMAP[item.key]) return;
+      const base = norm([item.b, item.m, item.v, item.al.join(' ')].join(' '));
+      item._idx = ' ' + base; item._cmp = base.replace(/ /g, '');
+      WL.push(item); WMAP[item.key] = item;
+    });
+    dataState = 'ready';
+  }
+  const getW = k => (k && WMAP[k]) || null;
+
+  function load(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+  function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  let st = Object.assign({}, DEFAULT, load(STORE, {}));
+  if(!Array.isArray(st.watchLines) || st.watchLines.length < 2) st.watchLines = DEFAULT.watchLines.slice();
+  if(!Array.isArray(st.plateLines) || st.plateLines.length !== 6) st.plateLines = PLATE_DEFAULT.slice();
+  if(SHAPES.every(s => s.id !== st.shape)) st.shape = 'watch';
+  let pins = load(PINS, []); if(!Array.isArray(pins)) pins = [];
+  let ppm = Number(load(PPM, 96/25.4)) || 96/25.4;
+
+  const byId = (arr, id) => arr.find(x => x.id === id) || arr[0];
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const mm = n => (Math.round(n*10)/10).toString().replace('.', ',');
+  const isWatch = s => s.shape === 'watch' || s.shape === 'slot';
+  const wname = w => (w.m.toLowerCase().indexOf(w.b.toLowerCase()) === 0 ? w.m : w.b + ' ' + w.m);
+  function attText(a){ if(!a) return ''; if(/khusus/i.test(a)) return ' · strap khusus merek'; return ' · ' + esc(a); }
+
+  const ctx2d = document.createElement('canvas').getContext('2d');
+  function emWidth(text, f){
+    ctx2d.font = f.w + ' 100px ' + f.css;
+    return ctx2d.measureText(text).width/100 + Math.max(0, text.length-1)*f.ls;
+  }
+  function fit(lines, f, boxW, boxH, maxCap, gap){
+    const L = lines.filter(l => l && l.trim().length);
+    if(!L.length) return {n:0, cap:0, size:0, lines:[], gap:gap};
+    const n = L.length;
+    const capByH = Math.min(maxCap, (boxH - gap*(n-1))/n);
+    let capByW = Infinity;
+    L.forEach(l => { const em = emWidth(l, f); if(em > 0) capByW = Math.min(capByW, boxW/em*f.cap); });
+    const cap = Math.min(capByH, capByW);
+    return {n:n, cap:cap, size:cap/f.cap, lines:L, gap:gap};
+  }
+  function textEls(r, f, cx, top, boxH, ink){
+    if(!r.n) return '';
+    const block = r.n*r.cap + (r.n-1)*r.gap;
+    let y = top + (boxH - block)/2 + r.cap, out = '';
+    r.lines.forEach(l => {
+      out += '<text x="' + cx.toFixed(3) + '" y="' + y.toFixed(3) + '" text-anchor="middle" font-family=\'' + f.css + '\' font-weight="' + f.w + '" font-size="' + r.size.toFixed(3) + '" letter-spacing="' + (f.ls*r.size).toFixed(3) + '" fill="' + ink + '">' + esc(l) + '</text>';
+      y += r.cap + r.gap;
+    });
+    return out;
+  }
+  function finishDefs(p, fin){
+    let d = '<linearGradient id="' + p + 'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + fin.hi + '"/><stop offset=".45" stop-color="' + fin.base + '"/><stop offset="1" stop-color="' + fin.lo + '"/></linearGradient>';
+    if(fin.id === 'brushed') d += '<pattern id="' + p + 'b" width="6" height="0.36" patternUnits="userSpaceOnUse"><line x1="0" y1="0.09" x2="6" y2="0.09" stroke="#FFFFFF" stroke-opacity=".30" stroke-width="0.06"/><line x1="0" y1="0.25" x2="6" y2="0.25" stroke="#000000" stroke-opacity=".10" stroke-width="0.05"/></pattern>';
+    return d;
+  }
+  function face(p, fin, x, y, w, h, rx){
+    let s = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '" fill="url(#' + p + 'g)" stroke="' + fin.edge + '" stroke-width="0.15"/>';
+    if(fin.id === 'brushed') s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '" fill="url(#' + p + 'b)"/>';
+    s += '<rect x="' + (x+0.35) + '" y="' + (y+0.25) + '" width="' + Math.max(0, w-0.7) + '" height="0.32" rx="0.16" fill="#FFFFFF" fill-opacity="' + (fin.id === 'black' ? 0.10 : 0.38) + '"/>';
+    return s;
+  }
+  function strapRect(x, y, w, h, c, rx){
+    return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (rx||0) + '" fill="' + c + '" stroke="#000000" stroke-opacity=".22" stroke-width="0.2"/>';
+  }
+  const linesFor = s => (isWatch(s) ? (s.two ? s.watchLines.slice(0,2) : [s.watchLines[0]]) : s.shape === 'shoe' ? [s.shoeLine] : s.plateLines).map(l => s.upper ? String(l||'').toUpperCase() : String(l||''));
+
+  function geom(s){
+    const f = byId(FONTS, s.font), L = linesFor(s);
+    if(s.shape === 'watch'){
+      const W = s.width + 2*WALL;
+      return {w:W, h:FACE_H, fit:fit(L, f, W-3, FACE_H-2.6, s.two ? 3.6 : 5.2, 1.1), top:1.3, boxH:FACE_H-2.6, rx:0.7};
+    }
+    if(s.shape === 'slot'){
+      const W = s.width + 3;
+      return {w:W, h:22, fit:fit(L, f, W-3, FACE_H-2.6, s.two ? 3.6 : 5.2, 1.1), top:6+1.3, boxH:FACE_H-2.6, rx:1.2};
+    }
+    if(s.shape === 'shoe') return {w:30, h:10, fit:fit(L, f, 18.4, 7.4, 5, 1), top:1.3, boxH:7.4, rx:2};
+    return {w:29, h:20, fit:fit(L, f, 26, 17, 3, 0.75), top:1.5, boxH:17, rx:2};
+  }
+
+  function objectSVG(s, p, g, ox, oy){
+    const fin = byId(FINISHES, s.finish), f = byId(FONTS, s.font), sc = byId(STRAPS, s.strap).c;
+    let out = face(p, fin, ox, oy, g.w, g.h, g.rx);
+    if(s.shape === 'shoe'){
+      [2.2, 25.8].forEach(sx => { out += '<rect x="' + (ox+sx) + '" y="' + (oy+1) + '" width="2" height="8" rx="1" fill="' + sc + '" stroke="#000000" stroke-opacity=".35" stroke-width="0.15"/>'; });
+    }
+    if(s.shape === 'slot'){
+      [1.5, 17.5].forEach(sy => { out += '<rect x="' + (ox+1.2) + '" y="' + (oy+sy) + '" width="' + (g.w-2.4) + '" height="3" rx="1.4" fill="#0E0F10" stroke="' + fin.edge + '" stroke-width="0.12"/>'; });
+    }
+    out += textEls(g.fit, f, ox + g.w/2, oy + g.top, g.boxH, fin.ink);
+    if(s.shape === 'slot'){
+      out += strapRect(ox+1.5, oy-0.6, s.width, 3.6, sc, 0.3) + strapRect(ox+1.5, oy+19, s.width, 3.6, sc, 0.3);
+    }
+    return out;
+  }
+
+  function closeSVG(s, p){
+    const g = geom(s), sc = byId(STRAPS, s.strap).c, fin = byId(FINISHES, s.finish);
+    let vb, body;
+    if(s.shape === 'watch'){
+      vb = [-4, -7, g.w+8, 24];
+      body = strapRect(WALL, -9, s.width, 28, sc) + objectSVG(s, p, g, 0, 0);
+    } else if(s.shape === 'slot'){
+      vb = [-4, -7, g.w+8, 36];
+      body = strapRect(1.5, -9, s.width, 40, sc) + objectSVG(s, p, g, 0, 0);
+    } else if(s.shape === 'shoe'){
+      vb = [-7, -5, 44, 20];
+      body = strapRect(-9, 1.6, 12.2, 6.8, sc, 0.6) + strapRect(26.8, 1.6, 12.2, 6.8, sc, 0.6) + objectSVG(s, p, g, 0, 0);
+    } else {
+      const bw = Math.min(s.width, 26), bx = (29 - bw)/2;
+      vb = [-4, -6, 37, 32];
+      body = strapRect(bx, -8, bw, 36, sc) + objectSVG(s, p, g, 0, 0);
+    }
+    return '<svg viewBox="' + vb.join(' ') + '" role="img" aria-label="Close-up ' + esc(byId(SHAPES, s.shape).label) + ' ' + esc(fin.label) + '"><defs>' + finishDefs(p, fin) + '</defs>' + body + '</svg>';
+  }
+
+  function caseInfo(w){
+    if(!w) return {shape:'round', d:45};
+    const t = (w.b + ' ' + w.m + ' ' + w.v).toLowerCase();
+    const nums = ((w.v || '').match(/\d{2}(?:\.\d+)?/g) || []).map(Number).filter(n => n >= 30 && n <= 55);
+    let d = nums.length ? Math.round(Math.max.apply(null, nums)) : 45;
+    let shape = 'round';
+    if(/whoop|polar loop|helio strap|cirqa/.test(t)) shape = 'pod';
+    else if(/apple|versa|sense|charge|inspire|luxe|gts|bip|square|smart band|mi band|band \d|watch fit|redmi watch|venu sq|vivosmart|vivofit/.test(t)) shape = 'rect';
+    if(shape === 'pod') d = 32;
+    if(d < 30 || d > 55) d = shape === 'rect' ? 40 : 45;
+    return {shape:shape, d:d};
+  }
+
+  function ctxSVG(s, p){
+    const g = geom(s), sc = byId(STRAPS, s.strap).c, fin = byId(FINISHES, s.finish);
+    if(s.shape === 'shoe'){
+      let b = '';
+      const ys = [14, 28, 42, 56, 70];
+      for(let i = 0; i < ys.length-1; i++){
+        b += '<line x1="18" y1="' + ys[i] + '" x2="42" y2="' + ys[i+1] + '" stroke="' + sc + '" stroke-width="4.4" stroke-linecap="round" stroke-opacity=".95"/>';
+        b += '<line x1="42" y1="' + ys[i] + '" x2="18" y2="' + ys[i+1] + '" stroke="' + sc + '" stroke-width="4.4" stroke-linecap="round" stroke-opacity=".95"/>';
+      }
+      ys.forEach(y => { [18, 42].forEach(x => { b += '<circle cx="' + x + '" cy="' + y + '" r="2.4" fill="#5E6368" stroke="#2B2E31" stroke-width="0.5"/>'; }); });
+      b += strapRect(10, 3.6, 40, 6.8, sc, 0.8);
+      b += objectSVG(s, p, g, 15, 2);
+      return '<svg viewBox="2 -4 56 82" role="img" aria-label="Shoe Tag di tali sepatu"><defs>' + finishDefs(p, fin) + '</defs>' + b + '</svg>';
+    }
+    const w = getW(s.watchKey), ci = caseInfo(w);
+    const bw = s.shape === 'plate' ? Math.min(s.width, 26) : s.width;
+    const cx = 50, cy = 56, sx = cx - bw/2;
+    const half = ci.shape === 'pod' ? 13 : ci.d/2;
+    let b = '';
+    b += strapRect(sx, -4, bw, cy, sc, 2);
+    b += '<rect x="' + (sx-2.4) + '" y="1.5" width="' + (bw+4.8) + '" height="8" rx="1.6" fill="none" stroke="#9AA0A5" stroke-width="1.3"/>';
+    b += '<rect x="' + (sx-0.8) + '" y="14" width="' + (bw+1.6) + '" height="3.2" rx="1" fill="' + sc + '" stroke="#000000" stroke-opacity=".45" stroke-width="0.35"/>';
+    b += strapRect(sx, cy, bw, 96, sc, 2);
+    [116, 124, 132, 140].forEach(y => { b += '<circle cx="' + cx + '" cy="' + y + '" r="1.1" fill="#000000" fill-opacity=".38"/>'; });
+    if(ci.shape === 'round'){
+      b += '<circle cx="' + cx + '" cy="' + cy + '" r="' + half + '" fill="#3B3F43" stroke="#16181A" stroke-width="0.6"/>';
+      b += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (half-3.6) + '" fill="#0F1112"/>';
+    } else if(ci.shape === 'rect'){
+      const rw = ci.d*0.84;
+      b += '<rect x="' + (cx-rw/2) + '" y="' + (cy-half) + '" width="' + rw + '" height="' + ci.d + '" rx="' + (ci.d*0.22) + '" fill="#3B3F43" stroke="#16181A" stroke-width="0.6"/>';
+      b += '<rect x="' + (cx-rw/2+2.6) + '" y="' + (cy-half+2.6) + '" width="' + (rw-5.2) + '" height="' + (ci.d-5.2) + '" rx="' + (ci.d*0.18) + '" fill="#0F1112"/>';
+    } else {
+      b += '<rect x="' + (cx-14) + '" y="' + (cy-13) + '" width="28" height="26" rx="6" fill="#2E3236" stroke="#16181A" stroke-width="0.6"/>';
+    }
+    if(ci.shape !== 'pod') b += '<text x="' + cx + '" y="' + (cy+2.6) + '" text-anchor="middle" font-family=\'"IBM Plex Mono",ui-monospace,monospace\' font-weight="500" font-size="7.2" fill="#E9ECEE">06:30</text>';
+    const ty = cy + half + 9;
+    const ox = s.shape === 'plate' ? cx - 14.5 : s.shape === 'slot' ? sx - 1.5 : sx - WALL;
+    b += objectSVG(s, p, g, ox, ty);
+    const label = s.shape === 'plate' ? 'Plat darurat di jam' : s.shape === 'slot' ? 'Watch Tag dua slot di strap jam' : 'Watch Tag di strap jam';
+    return '<svg viewBox="8 -6 84 158" role="img" aria-label="' + label + '"><defs>' + finishDefs(p, fin) + '</defs>' + b + '</svg>';
+  }
+
+  function realSVG(s, p){
+    const g = geom(s), fin = byId(FINISHES, s.finish), pad = 0.6;
+    const W = g.w + pad*2, H = g.h + pad*2;
+    const ruler = Math.ceil(g.w/10)*10;
+    let r = '';
+    for(let i = 0; i <= ruler; i++){
+      const x = pad + i, len = i % 10 === 0 ? 3 : i % 5 === 0 ? 2 : 1.2;
+      r += '<line x1="' + x + '" y1="' + (H+1) + '" x2="' + x + '" y2="' + (H+1+len) + '" stroke="currentColor" stroke-width="0.12"/>';
+      if(i % 10 === 0) r += '<text x="' + x + '" y="' + (H+7.2) + '" text-anchor="middle" font-family=\'"IBM Plex Mono",monospace\' font-size="2.6" fill="currentColor">' + i + '</text>';
+    }
+    const vbW = Math.max(W, ruler + pad*2) + 1, vbH = H + 9;
+    return '<svg width="' + (vbW*ppm).toFixed(1) + '" height="' + (vbH*ppm).toFixed(1) + '" viewBox="0 0 ' + vbW + ' ' + vbH + '" style="color:var(--muted)" role="img" aria-label="Tag ukuran asli"><defs>' + finishDefs(p, fin) + '</defs>' + objectSVG(s, p, g, pad, pad) + r + '</svg>';
+  }
+  function cardSVG(){
+    const W = 85.6, H = 53.98;
+    return '<svg width="' + (W*ppm + 2).toFixed(1) + '" height="' + (H*ppm + 2).toFixed(1) + '" viewBox="-0.3 -0.3 ' + (W+0.6) + ' ' + (H+0.6) + '" style="color:var(--accent)" role="img" aria-label="Kotak kalibrasi ukuran kartu 85,6 x 54 mm"><rect x="0" y="0" width="' + W + '" height="' + H + '" rx="3.18" fill="none" stroke="currentColor" stroke-width="0.4" stroke-dasharray="2 1.2"/><text x="' + (W/2) + '" y="' + (H/2+1.2) + '" text-anchor="middle" font-family=\'"IBM Plex Mono",monospace\' font-size="3.4" fill="currentColor">85,6 x 54 mm</text></svg>';
+  }
+
+  function statusFor(width, w){
+    if(w && w.b === 'Apple') return {k:'warn', t:'Ukur dulu, tawarkan Shoe Tag'};
+    if(width == null) return {k:'warn', t:'Lebar belum diketahui, ukur'};
+    if(MVP_WIDTHS.indexOf(width) >= 0) return {k:'ok', t:'Ada di MVP'};
+    if(width === 18 || width === 24) return {k:'warn', t:'Belum di MVP, menyusul'};
+    return {k:'bad', t:'Di luar ukuran kita, tawarkan Shoe Tag'};
+  }
+  function capClass(c){ return c >= MIN_CAP ? 'ok' : c >= 1.8 ? 'warn' : 'bad'; }
+  function capText(c){ return c >= MIN_CAP ? 'kebaca' : c >= 1.8 ? 'mepet' : 'terlalu kecil'; }
+
+  function search(q){
+    const toks = norm(q).split(' ').filter(Boolean);
+    if(!toks.length) return [];
+    const res = [];
+    WL.forEach(w => {
+      let score = 0;
+      for(const t of toks){
+        if((w._idx + ' ').indexOf(' ' + t + ' ') >= 0) score += 4;
+        else if(w._idx.indexOf(' ' + t) >= 0) score += 3;
+        else if(w._idx.indexOf(t) >= 0) score += 2;
+        else if(w._cmp.indexOf(t) >= 0) score += 1;
+        else return;
+      }
+      res.push([score - (w.b + w.m + w.v).length/200, w]);
+    });
+    res.sort((a, b) => b[0] - a[0]);
+    return res.slice(0, 8).map(r => r[1]);
+  }
+
+  let resultsList = [], activeIdx = -1;
+  function renderResults(){
+    const q = $('#watch-q').value, ul = $('#watch-results');
+    if(!q.trim()){ ul.hidden = true; $('#watch-q').setAttribute('aria-expanded', 'false'); return; }
+    if(dataState !== 'ready'){
+      ul.innerHTML = '<li class="empty-res">' + (dataState === 'error' ? 'Data jam gagal dimuat. Pilih lebar strap di bawah.' : 'Memuat data jam...') + '</li>';
+    } else {
+      resultsList = search(q);
+      if(!resultsList.length){
+        ul.innerHTML = '<li class="empty-res">Belum ada di daftar. Ukur strapnya, lalu pilih lebar di bawah.</li>';
+      } else {
+        ul.innerHTML = resultsList.map((w, i) => {
+          const stt = statusFor(w.w, w);
+          return '<li role="option" aria-selected="' + (i === activeIdx) + '"><button type="button" data-i="' + i + '" class="' + (i === activeIdx ? 'active' : '') + '"><span class="r-name">' + esc(wname(w)) + (w.v ? ' · ' + esc(w.v) : '') + '</span><span class="r-w">' + (w.w == null ? '?' : mm(w.w) + ' mm') + '</span><span class="r-meta">' + esc(stt.t) + ' · ' + esc(w.conf) + '</span></button></li>';
+        }).join('');
+      }
+    }
+    ul.hidden = false;
+    $('#watch-q').setAttribute('aria-expanded', 'true');
+  }
+  function pickWatch(w){
+    if(!w) return;
+    st.watchKey = w.key;
+    if(w.w != null && WIDTHS.indexOf(w.w) >= 0) st.width = w.w;
+    $('#watch-q').value = ''; activeIdx = -1; renderResults();
+    render();
+  }
+
+  function segButtons(el, items, cur, onPick, labelFn){
+    el.innerHTML = items.map(it => '<button type="button" aria-pressed="' + (it.id === cur) + '" data-id="' + it.id + '">' + labelFn(it) + '</button>').join('');
+    el.querySelectorAll('button').forEach(b => b.addEventListener('click', () => onPick(b.dataset.id)));
+  }
+
+  function renderControls(){
+    segButtons($('#width-seg'), WIDTHS.map(w => ({id:String(w), w:w})), String(st.width), id => { st.width = Number(id); render(); }, it => '<span class="mono">' + it.w + ' mm</span>' + (MVP_WIDTHS.indexOf(it.w) >= 0 ? '<span class="tagchip mvp">MVP</span>' : '<span class="tagchip next">Nanti</span>'));
+    segButtons($('#shape-seg'), SHAPES, st.shape, id => { st.shape = id; st.focusLine = 0; renderLines(); render(); }, it => esc(it.label) + (it.id === 'plate' ? '<span class="tagchip">Pembanding</span>' : it.id === 'watch' ? '<span class="tagchip mvp">MVP</span>' : it.id === 'slot' ? '<span class="tagchip next">Usulan</span>' : '<span class="tagchip next">Kandidat</span>'));
+    segButtons($('#finish-seg'), FINISHES, st.finish, id => { st.finish = id; render(); }, it => '<span class="swatch" style="background:' + it.base + '"></span>' + esc(it.label) + '<span class="tagchip ' + (it.status === 'mvp' ? 'mvp' : it.status === 'next' ? 'next' : '') + '">' + it.tag + '</span>');
+    segButtons($('#font-seg'), FONTS, st.font, id => { st.font = id; render(); }, it => '<span style="font-family:' + esc(it.css) + ';font-weight:700;letter-spacing:.03em">SUB 4</span> ' + esc(it.label));
+    segButtons($('#strap-seg'), STRAPS, st.strap, id => { st.strap = id; render(); }, it => '<span class="swatch" style="background:' + it.c + '"></span>' + esc(it.label));
+    $('#upper').checked = !!st.upper;
+    $('#two').checked = !!st.two;
+    $('#two-wrap').hidden = !isWatch(st);
+    $('#shape-note').textContent = byId(SHAPES, st.shape).note;
+  }
+
+  function limitFor(){
+    if(isWatch(st)) return CHAR_LIMIT[st.width] || 16;
+    if(st.shape === 'shoe') return SHOE_LIMIT;
+    return PLATE_LIMIT;
+  }
+  function renderLines(){
+    const box = $('#lines');
+    let vals, labels;
+    if(isWatch(st)){ vals = st.two ? st.watchLines.slice(0,2) : [st.watchLines[0]]; labels = st.two ? ['Baris 1','Baris 2'] : ['Baris 1']; }
+    else if(st.shape === 'shoe'){ vals = [st.shoeLine]; labels = ['Teks']; }
+    else { vals = st.plateLines; labels = st.plateLines.map((_, i) => 'Baris ' + (i+1)); }
+    box.innerHTML = vals.map((v, i) => '<div class="line-field"><label for="line-' + i + '"><span>' + labels[i] + '</span><span class="count" id="count-' + i + '"></span></label><input type="text" id="line-' + i + '" maxlength="' + (st.shape === 'plate' ? 26 : 24) + '" value="' + esc(v || '') + '" autocomplete="off" spellcheck="false"></div>').join('');
+    box.querySelectorAll('input').forEach((inp, i) => {
+      inp.addEventListener('input', () => { setLine(i, inp.value); render(); });
+      inp.addEventListener('focus', () => { st.focusLine = i; });
+    });
+    $('#text-hint').textContent = isWatch(st) ? (st.two ? 'Plus, 2 baris' : 'Essential, 1 baris') : st.shape === 'shoe' ? '1 baris' : '6 baris, pembanding';
+  }
+  function setLine(i, v){
+    if(isWatch(st)) st.watchLines[i] = v;
+    else if(st.shape === 'shoe') st.shoeLine = v;
+    else st.plateLines[i] = v;
+  }
+  function getLine(i){ return isWatch(st) ? st.watchLines[i] : st.shape === 'shoe' ? st.shoeLine : st.plateLines[i]; }
+
+  function renderPresets(){
+    $('#presets').innerHTML = PRESETS.map(g => '<div class="preset-group"><span class="minilabel">' + esc(g[0]) + '</span>' + g[1].map(t => '<button type="button" class="chipbtn" data-t="' + esc(t) + '">' + esc(t) + '</button>').join('') + '</div>').join('');
+    $('#presets').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+      const i = st.shape === 'plate' ? Math.min(st.focusLine || 0, 5) : isWatch(st) && st.two ? Math.min(st.focusLine || 0, 1) : 0;
+      setLine(i, b.dataset.t);
+      const inp = document.getElementById('line-' + i); if(inp) inp.value = b.dataset.t;
+      render();
+    }));
+  }
+
+  function readoutHTML(s, g){
+    const w = getW(s.watchKey);
+    const pills = [];
+    if(isWatch(s)){
+      pills.push('<span class="pill">Lebar ' + s.width + ' mm</span>');
+      const stt = statusFor(s.width, w && (w.w === s.width || w.b === 'Apple') ? w : null);
+      pills.push('<span class="pill ' + stt.k + '">' + esc(stt.t) + '</span>');
+      pills.push('<span class="pill">' + (s.shape === 'slot' ? 'Pelat ' + mm(g.w) + ' x 22 mm, perkiraan' : 'Tag ' + mm(g.w) + ' x 10 mm') + '</span>');
+    } else if(s.shape === 'shoe'){
+      pills.push('<span class="pill">Shoe Tag 30 x 10 mm</span>');
+      pills.push('<span class="pill ok">Satu ukuran</span>');
+    } else {
+      pills.push('<span class="pill">Plat 29 x 20 mm</span>');
+      pills.push('<span class="pill warn">Pembanding</span>');
+    }
+    if(g.fit.n) pills.push('<span class="pill ' + capClass(g.fit.cap) + '">Huruf ' + mm(g.fit.cap) + ' mm, ' + capText(g.fit.cap) + '</span>');
+    else pills.push('<span class="pill warn">Belum ada teks</span>');
+    return pills.join('');
+  }
+
+  function render(){
+    const g = geom(st);
+    $('#v-close').innerHTML = closeSVG(st, 'c');
+    $('#v-ctx').innerHTML = ctxSVG(st, 'x');
+    $('#lbl-ctx').textContent = st.shape === 'shoe' ? 'Di tali sepatu' : 'Di jam';
+    $('#readout').innerHTML = readoutHTML(st, g);
+    renderControls();
+    const w = getW(st.watchKey);
+    if(w){
+      const stt = statusFor(w.w, w);
+      let extra = '';
+      if(w.w != null && WIDTHS.indexOf(w.w) < 0) extra = '<p class="note warn">Strap ' + mm(w.w) + ' mm tidak ada di ukuran kita. Tawarkan Shoe Tag.</p>';
+      else if(w.w != null && w.w !== st.width) extra = '<p class="note warn">Lebar dipilih manual ' + st.width + ' mm, strap bawaan jam ini ' + mm(w.w) + ' mm.</p>';
+      else if(w.w == null) extra = '<p class="note warn">Lebar strap jam ini belum diketahui. Ukur pakai penggaris, lalu pilih lebar di bawah.</p>';
+      $('#picked').innerHTML = '<div class="picked"><div class="picked-top"><span class="picked-name">' + esc(wname(w)) + (w.v ? ' · ' + esc(w.v) : '') + '</span><span class="pill">' + (w.w == null ? 'lebar ?' : mm(w.w) + ' mm') + '</span><span class="pill ' + stt.k + '">' + esc(stt.t) + '</span><button type="button" class="btn small" id="clear-watch">Ganti jam</button></div><p class="note">Sumber: ' + esc(w.conf) + attText(w.att) + (w.src ? ' · <a href="' + esc(w.src) + '" target="_blank" rel="noopener">lihat sumber</a>' : '') + '</p>' + extra + '</div>';
+      $('#clear-watch').addEventListener('click', () => { st.watchKey = null; render(); $('#watch-q').focus(); });
+    } else {
+      $('#picked').innerHTML = '';
+    }
+    $('#width-note').textContent = isWatch(st) ? 'Batas sementara ' + (CHAR_LIMIT[st.width] || 16) + ' karakter per baris di lebar ' + st.width + ' mm. Yang menentukan tetap tinggi huruf.' : st.shape === 'shoe' ? 'Shoe Tag tidak tergantung lebar strap.' : 'Plat pembanding dipasang dengan strap silikon, cocok untuk band 12 mm ke atas.';
+    for(let i = 0; i < 6; i++){
+      const c = document.getElementById('count-' + i); if(!c) continue;
+      const len = String(getLine(i) || '').length, lim = limitFor();
+      c.textContent = len + '/' + lim; c.classList.toggle('over', len > lim);
+    }
+    const bad = [];
+    linesFor(st).forEach(l => { (l.match(ALLOWED) || []).forEach(ch => { if(bad.indexOf(ch) < 0) bad.push(ch); }); });
+    $('#char-note').textContent = bad.length ? 'Karakter ini belum bisa digrafir: ' + bad.join(' ') + '. Yang bisa: huruf, angka, spasi, + - . / : ! dan ♥.' : '';
+    $('#card-wrap').innerHTML = cardSVG();
+    $('#real-wrap').innerHTML = realSVG(st, 'r');
+    $('#ppm').value = ppm;
+    renderPins();
+    save(STORE, st);
+  }
+
+  function pinLabel(p){
+    const sh = byId(SHAPES, p.shape).label, fin = byId(FINISHES, p.finish).label, f = byId(FONTS, p.font).label;
+    return {title: sh + (isWatch(p) ? ' ' + p.width + ' mm' : ''), sub: fin + ' · ' + f};
+  }
+  function renderPins(){
+    const box = $('#pins');
+    $('#pins-empty').hidden = pins.length > 0;
+    box.innerHTML = pins.map((p, i) => {
+      const g = geom(p), lb = pinLabel(p), w = getW(p.watchKey);
+      return '<div class="pin">' + closeSVG(p, 'p' + i) + '<div class="meta"><b>' + esc(lb.title) + '</b><span>' + esc(lb.sub) + '</span><span>' + esc(linesFor(p).filter(Boolean).join(' / ')) + '</span>' + (w ? '<span>' + esc(wname(w)) + '</span>' : '') + (g.fit.n ? '<span>Huruf ' + mm(g.fit.cap) + ' mm, ' + capText(g.fit.cap) + '</span>' : '') + '<div class="row"><button type="button" class="btn small" data-load="' + i + '">Buka</button><button type="button" class="btn small" data-del="' + i + '">Hapus</button></div></div></div>';
+    }).join('');
+    box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { pins.splice(Number(b.dataset.del), 1); save(PINS, pins); renderPins(); }));
+    box.querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', () => { st = Object.assign({}, DEFAULT, JSON.parse(JSON.stringify(pins[Number(b.dataset.load)]))); renderLines(); render(); window.scrollTo({top:0, behavior:'smooth'}); }));
+  }
+
+  function summary(){
+    const g = geom(st), w = getW(st.watchKey);
+    const parts = ['LifeTag ' + byId(SHAPES, st.shape).label];
+    if(isWatch(st)) parts.push(st.width + ' mm');
+    parts.push(byId(FINISHES, st.finish).label, 'font ' + byId(FONTS, st.font).label);
+    parts.push('teks: ' + linesFor(st).filter(Boolean).join(' / '));
+    if(w) parts.push('jam: ' + wname(w) + (w.v ? ' ' + w.v : ''));
+    if(g.fit.n) parts.push('tinggi huruf ' + mm(g.fit.cap) + ' mm');
+    return parts.join(' · ');
+  }
+  function flash(msg){ const n = $('#action-note'); n.textContent = msg; clearTimeout(flash.t); flash.t = setTimeout(() => { n.textContent = ''; }, 2600); }
+
+  $('#watch-q').addEventListener('input', () => { activeIdx = -1; renderResults(); });
+  $('#watch-q').addEventListener('keydown', e => {
+    if($('#watch-results').hidden) return;
+    if(e.key === 'ArrowDown'){ e.preventDefault(); activeIdx = Math.min(activeIdx + 1, resultsList.length - 1); renderResults(); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); renderResults(); }
+    else if(e.key === 'Enter'){ e.preventDefault(); pickWatch(resultsList[activeIdx >= 0 ? activeIdx : 0]); }
+    else if(e.key === 'Escape'){ $('#watch-q').value = ''; renderResults(); }
+  });
+  $('#watch-results').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if(b) pickWatch(resultsList[Number(b.dataset.i)]); });
+  $('#upper').addEventListener('change', e => { st.upper = e.target.checked; render(); });
+  $('#two').addEventListener('change', e => { st.two = e.target.checked; st.focusLine = 0; renderLines(); render(); });
+  $('#heart-btn').addEventListener('click', () => {
+    const i = st.focusLine || 0, cur = String(getLine(i) || '');
+    const nv = (cur + (cur && !/\s$/.test(cur) ? ' ' : '') + '♥').slice(0, 24);
+    setLine(i, nv); const inp = document.getElementById('line-' + i); if(inp) inp.value = nv; render();
+  });
+  $('#pin-btn').addEventListener('click', () => {
+    if(pins.length >= 6){ flash('Perbandingan penuh. Hapus satu dulu.'); return; }
+    pins.push(JSON.parse(JSON.stringify(st))); save(PINS, pins); renderPins(); flash('Tersimpan di perbandingan.');
+  });
+  $('#copy-btn').addEventListener('click', () => {
+    const text = summary();
+    const done = () => flash('Ringkasan disalin.');
+    const fallback = () => {
+      const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); done(); }catch(e){ flash(text); }
+      ta.remove();
+    };
+    try{ navigator.clipboard.writeText(text).then(done, fallback); }catch(e){ fallback(); }
+  });
+  $('#ppm').addEventListener('input', e => { ppm = Number(e.target.value); save(PPM, ppm); $('#card-wrap').innerHTML = cardSVG(); $('#real-wrap').innerHTML = realSVG(st, 'r'); });
+
+  let wakeLock = null;
+  $('#wake').addEventListener('change', async e => {
+    const note = $('#wake-note');
+    try{
+      if(e.target.checked){ wakeLock = await navigator.wakeLock.request('screen'); note.textContent = 'Aktif selama halaman terbuka'; wakeLock.addEventListener('release', () => { $('#wake').checked = false; note.textContent = ''; }); }
+      else if(wakeLock){ await wakeLock.release(); wakeLock = null; note.textContent = ''; }
+    }catch(err){ e.target.checked = false; note.textContent = 'Perangkat ini menolak. Atur lewat setelan layar.'; }
+  });
+
+  renderPresets();
+  renderLines();
+  render();
+
+  fetch('lebar-strap-jam.csv', {cache:'no-cache'})
+    .then(r => { if(!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(t => {
+      setData(t);
+      const brands = {}; WL.forEach(w => { brands[w.b] = 1; });
+      $('#data-note').textContent = WL.length + ' model dari ' + Object.keys(brands).length + ' merek.';
+      renderResults(); render();
+    })
+    .catch(() => {
+      dataState = 'error';
+      $('#data-note').textContent = 'Data jam gagal dimuat. Cek koneksi, lalu muat ulang halaman. Lebar strap tetap bisa dipilih manual.';
+      renderResults();
+    });
+
+  if(document.fonts){
+    Promise.all(FONTS.map(f => document.fonts.load('700 20px ' + f.key).catch(() => null))).then(() => render());
+    document.fonts.ready.then(() => render());
+  }
+  if('serviceWorker' in navigator && location.protocol === 'https:'){
+    const reg = () => navigator.serviceWorker.register('sw.js').catch(() => {});
+    if(document.readyState === 'complete') reg(); else window.addEventListener('load', reg);
+  }
+})();
+</script>
+</body>
+</html>
