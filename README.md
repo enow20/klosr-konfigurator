@@ -4,6 +4,8 @@ Halaman mockup tag grafir untuk strap jam dan tali sepatu. Cari model jam supaya
 
 Buka di laptop atau HP: https://enow20.github.io/lifetag-konfigurator/
 
+Tampilan tim (alat internal untuk wawancara: bentuk usulan, plat pembanding, sumber data, detail teknis, perbandingan, ukuran asli) dibuka lewat link yang sama dengan akhiran `#tim`.
+
 Tidak perlu login. Setelah sekali dibuka, halaman tetap jalan tanpa sinyal. Di HP bisa dipasang ke layar utama lewat menu browser ("Tambahkan ke layar utama" atau "Add to Home Screen").
 
 ## Isi repo

@@ -1,4 +1,4 @@
-const CACHE = 'lifetag-konfigurator-v2';
+const CACHE = 'lifetag-konfigurator-v3';
 const CORE = ['./', './index.html', './lebar-strap-jam.csv', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
