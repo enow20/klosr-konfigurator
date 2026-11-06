@@ -1,5 +1,5 @@
-const CACHE = 'klosr-konfigurator-v5';
-const CORE = ['./', './index.html', './lebar-strap-jam.csv', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const CACHE = 'klosr-konfigurator-v6';
+const CORE = ['./', './index.html', './tim.enc.json', './lebar-strap-jam.csv', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));

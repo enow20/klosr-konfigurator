@@ -6,17 +6,16 @@ Buka di laptop atau HP: https://enow20.github.io/klosr-konfigurator/
 
 Repo ini dulu bernama `lifetag-konfigurator`. Link lama (`/lifetag-konfigurator/`) sudah tidak berlaku. Kalau sudah dipasang di layar utama HP, hapus lalu pasang lagi dari link baru.
 
-Tampilan tim (alat internal untuk wawancara: bentuk usulan, plat pembanding, sumber data, detail teknis, perbandingan, ukuran asli) dibuka lewat link yang sama dengan akhiran `#tim`.
+Tampilan tim (alat internal) dibuka lewat link yang sama dengan akhiran `#tim` dan dikunci password. Isinya disimpan terenkripsi di `tim.enc.json`. Password tidak ada di repo ini.
 
-Tampilan tim juga memuat **Rancangan produksi** Watch Tag selongsong: ukuran potong datar yang sudah memperhitungkan 4 tekukan, posisi garis tekuk, penampang, 3D dengan animasi tekuk, pengaruh tebal pelat, unduh DXF potong (hanya garis potong), cetak pola skala 1:1, dan teks spesifikasi untuk vendor potong. Angkanya perkiraan sampai diuji dengan sample; K-factor bisa dikoreksi dari hasil tekuk nyata.
-
-Tidak perlu login. Setelah sekali dibuka, halaman tetap jalan tanpa sinyal. Di HP bisa dipasang ke layar utama lewat menu browser ("Tambahkan ke layar utama" atau "Add to Home Screen").
+Tampilan pembeli tidak perlu login. Setelah sekali dibuka, halaman tetap jalan tanpa sinyal. Di HP bisa dipasang ke layar utama lewat menu browser ("Tambahkan ke layar utama" atau "Add to Home Screen").
 
 ## Isi repo
 
 | File | Isi |
 | --- | --- |
-| `index.html` | Halaman konfigurator. Tampilan dan logika ada di satu file ini. |
+| `index.html` | Halaman konfigurator untuk pembeli, plus kolom password untuk `#tim`. Dibuat oleh skrip build dari sumber yang disimpan terpisah, jadi jangan diedit langsung di sini. |
+| `tim.enc.json` | Tampilan tim dalam bentuk terenkripsi (AES-GCM, kunci dari password lewat PBKDF2). Dibuat oleh skrip build yang sama. |
 | `lebar-strap-jam.csv` | Lebar strap bawaan per model jam, dengan sumber per baris. |
 | `sw.js` | Menyimpan salinan halaman dan data di perangkat supaya tetap jalan tanpa sinyal. |
 | `manifest.webmanifest`, `icon-192.png`, `icon-512.png` | Supaya bisa dipasang ke layar utama HP. |
@@ -29,4 +28,4 @@ Tidak perlu login. Setelah sekali dibuka, halaman tetap jalan tanpa sinyal. Di H
 
 ## Penting
 
-Repo dan situs ini publik. Jangan taruh harga, vendor, angka penjualan, atau rencana bisnis di sini. Halaman memakai tag `noindex` supaya tidak muncul di mesin pencari.
+Repo dan situs ini publik. Jangan taruh harga, vendor, angka penjualan, rencana bisnis, atau password di sini. Halaman memakai tag `noindex` supaya tidak muncul di mesin pencari.
