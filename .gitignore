@@ -1,0 +1,5 @@
+# Pengaman tambahan: file password tim tidak boleh pernah masuk repo publik ini.
+# Password disimpan di luar folder repo (~/.config/klosr/tim-password).
+tim-password
+*.tim-password
+.tim-password

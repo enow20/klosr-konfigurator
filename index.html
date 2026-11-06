@@ -133,74 +133,11 @@ footer p{margin:0}
   .stage{position:static}
   .view svg{max-height:46vh}
 }
-/* Rancangan produksi (tampilan tim) */
-#prod{grid-template-columns:minmax(0,1fr)}
-#prod > *{min-width:0}
-.prod-grid{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
-.prod-params{display:grid;gap:12px;align-content:start;min-width:0}
-.fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px 12px}
-.field{display:grid;gap:5px;min-width:0;align-content:end}
-.field label{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font:500 11px/1.25 var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-.field .auto{font-size:10px;letter-spacing:.04em;color:var(--ok);flex:none}
-.field .auto.man{color:var(--warn)}
-.inunit{display:flex;align-items:center;gap:6px}
-.inunit input[type=text]{font:500 15px/1.2 var(--font-mono);padding:8px 10px;font-variant-numeric:tabular-nums}
-.inunit span{font:400 12px/1 var(--font-mono);color:var(--muted);min-width:20px}
-.prod-out{display:grid;gap:12px;align-content:start;min-width:0}
-.bignum{font:600 clamp(30px,5vw,40px)/1 var(--font-display);letter-spacing:.01em;font-variant-numeric:tabular-nums;margin-top:4px}
-.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:5px 14px;margin:0;font-size:13.5px}
-.kv dt{color:var(--muted)}
-.kv dd{margin:0;font:400 13px/1.45 var(--font-mono);font-variant-numeric:tabular-nums;min-width:0}
-.warns{display:grid;gap:5px}
-.prod-views{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
-.fig{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--stage);display:grid;align-content:start;min-width:0}
-.fig .view-label{display:flex;justify-content:space-between;gap:8px;padding:8px 12px 2px}
-.fig-body{padding:2px 8px 8px}
-.fig-body svg{display:block;width:100%;height:auto}
-.fig-body.real svg{width:auto;max-width:none}
-.fig-ctl{display:grid;gap:8px;padding:10px 12px 12px;background:var(--surface);border-top:1px solid var(--line)}
-.fig-ctl .minilabel{margin:0;display:flex;justify-content:space-between}
-.p3d{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
-.p3d:active{cursor:grabbing}
-.p3d svg{display:block;width:100%;height:auto;max-height:52vh}
-.p3d-msg{padding:28px 14px}
-.seg.small button{padding:6px 10px;font-size:13px}
-.tbl{border-collapse:collapse;width:100%;font-size:13px}
-.tbl th{font:500 11px/1.2 var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 12px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
-.tbl td{padding:7px 12px 7px 0;border-bottom:1px solid var(--line);white-space:nowrap;font-variant-numeric:tabular-nums}
-.tbl td.num{font:400 12.5px/1.3 var(--font-mono)}
-.tbl tr.cur td{background:var(--accent-soft);color:var(--accent-ink)}
-.tbl tr.cur td:first-child{box-shadow:inset 3px 0 0 var(--accent);padding-left:8px}
-.tbl td:first-child,.tbl th:first-child{padding-left:8px}
-.sv-cut{fill:none;stroke:var(--accent);stroke-width:.22}
-.sv-face{fill:var(--accent-soft)}
-.sv-bend{stroke:var(--ink);stroke-width:.13;stroke-dasharray:.8 .55}
-.sv-dim{stroke:var(--muted);stroke-width:.09;fill:none}
-.sv-txt{fill:var(--ink)}
-.sv-sm{fill:var(--muted)}
-#print-sheet{display:none}
-@media print{
-  body.printing{background:#FFFFFF}
-  body.printing .wrap{display:none!important}
-  body.printing #print-sheet{display:block!important;color:#000000;font:10.5pt/1.4 Arial,Helvetica,sans-serif}
-  #print-sheet h1{font-size:14pt;margin:0 0 3mm}
-  #print-sheet h2{font-size:11pt;margin:6mm 0 2mm}
-  #print-sheet p{margin:1.5mm 0}
-  #print-sheet section{break-inside:avoid}
-  #print-sheet svg{display:block}
-  #print-sheet .sv-cut{stroke:#000000}
-  #print-sheet .sv-face{fill:#EBEBEB}
-  #print-sheet .sv-bend{stroke:#000000}
-  #print-sheet .sv-dim{stroke:#555555}
-  #print-sheet .sv-txt{fill:#000000}
-  #print-sheet .sv-sm{fill:#444444}
-  @page{margin:12mm}
-}
-@media (min-width:920px){
-  .prod-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-  .prod-views{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
-  .fig-3d{grid-row:span 2}
-}
+/* Gerbang password tampilan tim (hanya di build publik) */
+.gate{max-width:440px;margin:0 auto;padding:12vh 16px 48px}
+.gate form{display:grid;gap:12px}
+.gate input[type=password]{width:100%;min-width:0;font:500 16px/1.2 var(--font-body);padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+.gate input[type=password].bad{border-color:var(--bad);background:var(--bad-soft)}
 </style>
 </head>
 <body>
@@ -211,13 +148,7 @@ footer p{margin:0}
       <h1>Konfigurator Klosr</h1>
       <p class="sub">Cari jam kamu, ketik teks, pilih finishing, lalu salin teks pesanan.</p>
     </div>
-    <div class="row team-only">
-      <label class="toggle" for="wake"><input type="checkbox" id="wake"> Layar tetap nyala</label>
-      <span class="note" id="wake-note"></span>
-    </div>
   </header>
-  <div class="seg view-switch" id="view-switch" hidden><button type="button" data-v="tim">Tampilan tim</button><button type="button" data-v="pembeli">Tampilan pembeli</button></div>
-  <p class="team-banner team-only">Tampilan tim: ada bentuk tambahan, lebar 18 dan 24 mm, sumber data, detail teknis, perbandingan, ukuran asli, dan layar tetap nyala. Semua ini tidak terlihat di tampilan pembeli.</p>
 
   <div class="layout">
     <div class="left">
@@ -229,10 +160,8 @@ footer p{margin:0}
     </section>
     <section class="order-box" aria-label="Cek dan pesan">
       <div class="check" id="check" aria-live="polite"></div>
-      <div class="tech team-only" id="tech"></div>
       <div class="order-row">
         <button class="btn primary" id="order-btn" type="button">Salin teks pesanan</button>
-        <button class="btn small team-only" id="pin-btn" type="button">Simpan ke perbandingan</button>
         <span class="note" id="order-note" aria-live="polite"></span>
       </div>
       <details class="order-preview" id="order-preview">
@@ -256,7 +185,6 @@ footer p{margin:0}
           <div class="minilabel">Atau pilih lebar strap</div>
           <div class="seg" id="width-seg"></div>
         </div>
-        <p class="note team-only" id="width-note"></p>
       </section>
 
       <section class="panel" aria-labelledby="h-shape">
@@ -294,86 +222,84 @@ footer p{margin:0}
     </div>
   </div>
 
-  <section class="panel wide team-only" aria-labelledby="h-compare">
-    <h2 id="h-compare">Perbandingan <small>tersimpan di perangkat ini, maksimal 6</small></h2>
-    <div class="compare-grid" id="pins"></div>
-    <p class="note" id="pins-empty">Belum ada yang disimpan. Tekan "Simpan ke perbandingan" untuk menaruh beberapa versi berdampingan.</p>
-  </section>
-
-  <section class="panel wide team-only" aria-labelledby="h-real">
-    <h2 id="h-real">Ukuran asli di layar <small>kalibrasi sekali per perangkat</small></h2>
-    <p class="note">Tempel kartu ATM atau KTP ke layar, lalu geser slider sampai kotak di bawah pas dengan tepi kartu. Setelah itu tag ditampilkan seukuran aslinya.</p>
-    <label class="sr" for="ppm">Skala layar</label>
-    <input type="range" id="ppm" min="2" max="10" step="0.01">
-    <div class="scrollx" id="card-wrap"></div>
-    <div class="scrollx" id="real-wrap"></div>
-  </section>
-
-  <section class="panel wide team-only" aria-labelledby="h-prod" id="prod">
-    <h2 id="h-prod">Rancangan produksi <small>Watch Tag selongsong: ukuran potong untuk vendor dan tekuk di jig</small></h2>
-    <p class="note">Pelat lurus ditekuk 4 kali, celah di tengah belakang, tanpa las. Celah menghadap kulit, jadi tepinya wajib di-deburr. Semua angka perkiraan sampai diuji di sample: setelah sample ditekuk, ukur lebar dalamnya, lalu koreksi K-factor di bawah.</p>
-    <div class="prod-grid">
-      <div class="prod-params">
-        <div><div class="minilabel">Lebar strap</div><div class="seg" id="pw-seg"></div></div>
-        <div><div class="minilabel">Tebal pelat 316L (mm)</div><div class="seg" id="pt-seg"></div></div>
-        <div class="fields" id="p-fields"></div>
-        <div class="row"><button class="btn small" type="button" id="p-reset">Kembalikan ke awal</button></div>
-      </div>
-      <div class="prod-out">
-        <div id="p-key"></div>
-        <div class="warns" id="p-warn" aria-live="polite"></div>
-      </div>
-    </div>
-    <div class="prod-views">
-      <figure class="fig fig-3d">
-        <div class="view-label"><span>3D</span><span>geser untuk memutar</span></div>
-        <div class="p3d" id="p3d"></div>
-        <div class="fig-ctl">
-          <label class="minilabel" for="p-fold"><span>Tekuk</span><span id="p-fold-v">100%</span></label>
-          <input type="range" id="p-fold" min="0" max="100" step="1" value="100">
-          <div class="row">
-            <button class="btn small" type="button" id="p-anim">Putar animasi tekuk</button>
-            <div class="seg small" id="p-views"></div>
-            <label class="toggle" for="p-strap"><input type="checkbox" id="p-strap"> Strap</label>
-          </div>
-          <p class="note">Strap dan teks grafir tampil di tekuk 100%. Grafir dikerjakan setelah ditekuk.</p>
-        </div>
-      </figure>
-      <figure class="fig">
-        <div class="view-label"><span>Penampang</span><span>dilihat dari ujung strap</span></div>
-        <div class="fig-body" id="p-sec"></div>
-      </figure>
-      <figure class="fig">
-        <div class="view-label"><span>Pola datar</span><span>yang dipotong vendor</span></div>
-        <div class="fig-body scrollx" id="p-flat"></div>
-        <div class="fig-ctl"><label class="toggle" for="p-real"><input type="checkbox" id="p-real"> Ukuran asli (pakai kalibrasi kartu di atas)</label></div>
-      </figure>
-    </div>
-    <div><div class="minilabel">Pengaruh tebal pelat, strap <span id="p-tw"></span> mm</div><div class="scrollx" id="p-tab-t"></div></div>
-    <div><div class="minilabel">Semua lebar, tebal <span id="p-wt"></span> mm</div><div class="scrollx" id="p-tab-w"></div></div>
-    <div class="row">
-      <div class="seg small" id="p-multi"></div>
-      <button class="btn small" type="button" id="p-dxf">Unduh DXF potong</button>
-      <button class="btn small" type="button" id="p-print">Cetak 1:1</button>
-      <button class="btn small primary" type="button" id="p-copy">Salin spesifikasi vendor</button>
-    </div>
-    <p class="note" id="p-note" aria-live="polite"></p>
-    <details class="order-preview" id="p-spec-box"><summary>Lihat teks spesifikasi</summary><pre id="p-spec"></pre></details>
-  </section>
 
   <footer>
     <p>Ukuran dalam milimeter. Warna di layar mendekati warna asli.</p>
-    <p class="team-only">Data lebar strap: spek pabrikan dan daftar kompatibilitas, dicek 18 Okt 2026 (<a href="lebar-strap-jam.csv">lihat data</a>). Batas huruf: minimal 1,8 mm, ideal 2,2 mm.</p>
   </footer>
 </div>
-<div id="print-sheet" aria-hidden="true"></div>
 
 <script>
 (function(){
-  const ALLOW_TEAM = true;
+  // Satu sumber, dua hasil build (tools/konfigurator/build.mjs di repo privat klosr):
+  // - index.html publik: bagian bertanda TEAM dibuang, bagian PUBLIC (gerbang password) dipakai.
+  // - tim.enc.json: build tim (bagian PUBLIC dibuang), dienkripsi dengan password tim.
+  const ALLOW_TEAM = false;
   const TEAM = ALLOW_TEAM && location.hash === '#tim';
   document.body.classList.toggle('team', TEAM);
   window.addEventListener('hashchange', () => location.reload());
+  if(location.hash === '#tim'){ timGate(); return; }
+  // Tampilan tim dikunci. Isinya ada di tim.enc.json: AES-GCM, kunci dari password lewat PBKDF2-SHA256.
+  // Password tidak pernah ada di repo. Fungsi ini sengaja tidak memakai helper aplikasi di bawah.
+  function timGate(){
+    const KEY = 'klosr.tim.key';
+    const q = s => document.querySelector(s);
+    const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const b64e = u => { let s = ''; u.forEach(c => { s += String.fromCharCode(c); }); return btoa(s); };
+    const stores = () => { const a = []; try{ a.push(sessionStorage); }catch(e){} try{ a.push(localStorage); }catch(e){} return a; };
+    const recall = () => { for(const s of stores()){ try{ const v = JSON.parse(s.getItem(KEY) || 'null'); if(v && v.salt && v.k) return v; }catch(e){} } return null; };
+    const forget = () => { stores().forEach(s => { try{ s.removeItem(KEY); }catch(e){} }); };
+    const remember = (salt, raw, long) => {
+      const v = JSON.stringify({salt:salt, k:b64e(raw)});
+      try{ sessionStorage.setItem(KEY, v); }catch(e){}
+      if(long){ try{ localStorage.setItem(KEY, v); }catch(e){} }
+    };
+    q('.wrap').hidden = true;
+    const box = document.createElement('div');
+    box.className = 'gate';
+    box.innerHTML = '<section class="panel"><h2>Tampilan tim</h2>' +
+      '<form id="gate-form"><label class="minilabel" for="gate-pw">Password tim</label>' +
+      '<input type="password" id="gate-pw" autocomplete="current-password" required>' +
+      '<label class="toggle" for="gate-keep"><input type="checkbox" id="gate-keep"> Ingat di perangkat ini</label>' +
+      '<div class="row"><button class="btn primary" type="submit" id="gate-go">Buka</button>' +
+      '<button class="btn small" type="button" id="gate-back">Ke tampilan pembeli</button></div>' +
+      '<p class="note" id="gate-msg" aria-live="polite"></p></form></section>';
+    document.body.appendChild(box);
+    const msg = t => { q('#gate-msg').textContent = t; };
+    q('#gate-back').addEventListener('click', () => { location.hash = ''; });
+    if(!(window.crypto && crypto.subtle)){ msg('Browser ini tidak bisa membuka tampilan tim. Coba Chrome atau Safari versi terbaru.'); q('#gate-go').disabled = true; return; }
+    let blobP = null;
+    const blob = () => blobP || (blobP = fetch('tim.enc.json', {cache:'no-cache'}).then(r => { if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }));
+    const openRaw = async (raw, b) => {
+      const key = await crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']);
+      const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64d(b.iv)}, key, b64d(b.ct));
+      return new TextDecoder().decode(pt);
+    };
+    const show = html => { document.open(); document.write(html); document.close(); };
+    const saved = recall();
+    if(saved){
+      msg('Membuka...');
+      blob().then(b => { if(saved.salt !== b.salt) throw new Error('password berubah'); return openRaw(b64d(saved.k), b); })
+        .then(show)
+        .catch(() => { forget(); msg(''); q('#gate-pw').focus(); });
+    } else q('#gate-pw').focus();
+    q('#gate-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const pw = q('#gate-pw').value;
+      if(!pw) return;
+      q('#gate-go').disabled = true; q('#gate-pw').classList.remove('bad'); msg('Membuka...');
+      let b;
+      try{ b = await blob(); }catch(err){ blobP = null; q('#gate-go').disabled = false; msg('File tampilan tim belum bisa dimuat. Cek koneksi, lalu coba lagi.'); return; }
+      try{
+        const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']);
+        const raw = new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2', hash:'SHA-256', salt:b64d(b.salt), iterations:b.iter}, base, 256));
+        const html = await openRaw(raw, b);
+        remember(b.salt, raw, q('#gate-keep').checked);
+        show(html);
+      }catch(err){
+        q('#gate-pw').classList.add('bad'); q('#gate-go').disabled = false; msg('Password salah.'); q('#gate-pw').select();
+      }
+    });
+  }
   const WA_NUMBER = '';
 
   const $ = s => document.querySelector(s);
@@ -404,8 +330,6 @@ footer p{margin:0}
   const SHAPES_ALL = [
     {id:'watch', label:'Watch Tag', note:'Selongsong stainless 316L yang diselipkan ke strap jam. Tinggi 10 mm, lebar mengikuti strap.'},
     {id:'shoe', label:'Shoe Tag', note:'Pelat stainless 316L sekitar 30 x 10 mm yang dipasang di tali sepatu. Satu ukuran untuk semua sepatu.'},
-    {id:'slot', team:true, label:'Watch Tag dua slot', tag:'Usulan', note:'Usulan: pelat datar tanpa tekuk, lebar strap + 3 mm. Panjang 22 mm masih perkiraan.'},
-    {id:'plate', team:true, label:'Plat darurat', tag:'Pembanding', note:'Pembanding wawancara: plat 29 x 20 mm, 6 baris info darurat. Bukan produk.'}
   ];
   const SHAPES = SHAPES_ALL.filter(s => TEAM || !s.team);
   const PRESETS = [
@@ -479,9 +403,7 @@ footer p{margin:0}
 
   function geom(s){
     if(s.shape === 'watch'){ const W = s.width + 2*WALL; return {w:W, h:FACE_H, boxW:W-3, boxH:FACE_H-2.6, top:1.3, maxCap:s.two ? 3.6 : 5.2, gap:1.1, rx:0.7}; }
-    if(s.shape === 'slot'){ const W = s.width + 3; return {w:W, h:22, boxW:W-3, boxH:FACE_H-2.6, top:6+1.3, maxCap:s.two ? 3.6 : 5.2, gap:1.1, rx:1.2}; }
     if(s.shape === 'shoe') return {w:30, h:10, boxW:18.4, boxH:7.4, top:1.3, maxCap:5, gap:1, rx:2};
-    return {w:29, h:20, boxW:26, boxH:17, top:1.5, maxCap:3, gap:0.75, rx:2};
   }
   const linesRaw = s => isWatch(s) ? (s.two ? s.watchLines.slice(0,2) : [s.watchLines[0]]) : s.shape === 'shoe' ? [s.shoeLine] : s.plateLines;
   const linesFor = s => linesRaw(s).map(l => s.upper ? String(l||'').toUpperCase() : String(l||''));
@@ -496,7 +418,6 @@ footer p{margin:0}
     return {n:n, cap:cap, size:cap/f.cap, lines:L, gap:g.gap};
   }
   function charLimit(s){
-    if(s.shape === 'plate') return 24;
     const f = byId(FONTS, s.font), g = geom(s);
     const avg = emWidth(SAMPLE, f)/SAMPLE.length;
     return Math.max(4, Math.floor((g.boxW*f.cap/MIN_CAP + f.ls)/avg));
@@ -504,7 +425,6 @@ footer p{margin:0}
   function lineInfo(s, text){
     const lim = charLimit(s), len = text.length;
     if(!text.trim()) return {k:'empty', len:len, lim:lim, msg:''};
-    if(s.shape === 'plate') return {k:'ok', len:len, lim:lim, msg:''};
     if(len > lim) return {k:'bad', len:len, lim:lim, msg:'Terlalu panjang, hapus ' + (len - lim) + ' karakter.'};
     const f = byId(FONTS, s.font), g = geom(s);
     const cap = Math.min(g.maxCap, g.boxW/emWidth(text, f)*f.cap);
@@ -543,11 +463,7 @@ footer p{margin:0}
     if(s.shape === 'shoe'){
       [2.2, 25.8].forEach(sx => { out += '<rect x="' + (ox+sx) + '" y="' + (oy+1) + '" width="2" height="8" rx="1" fill="' + sc + '" stroke="#000000" stroke-opacity=".35" stroke-width="0.15"/>'; });
     }
-    if(s.shape === 'slot'){
-      [1.5, 17.5].forEach(sy => { out += '<rect x="' + (ox+1.2) + '" y="' + (oy+sy) + '" width="' + (g.w-2.4) + '" height="3" rx="1.4" fill="#0E0F10" stroke="' + fin.edge + '" stroke-width="0.12"/>'; });
-    }
     out += textEls(fitLines(s, g), f, ox + g.w/2, oy + g.top, g.boxH, fin.ink);
-    if(s.shape === 'slot') out += strapRect(ox+1.5, oy-0.6, s.width, 3.6, sc, 0.3) + strapRect(ox+1.5, oy+19, s.width, 3.6, sc, 0.3);
     return out;
   }
   const CLOSE_W = 44;
@@ -555,9 +471,7 @@ footer p{margin:0}
     const g = geom(s), sc = byId(STRAPS, s.strap).c, fin = byId(FINISHES, s.finish);
     let vb, body;
     if(s.shape === 'watch'){ vb = [-4, -7, g.w+8, 24]; body = strapRect(WALL, -9, s.width, 28, sc) + objectSVG(s, p, g, 0, 0); }
-    else if(s.shape === 'slot'){ vb = [-4, -7, g.w+8, 36]; body = strapRect(1.5, -9, s.width, 40, sc) + objectSVG(s, p, g, 0, 0); }
     else if(s.shape === 'shoe'){ vb = [-7, -5, 44, 20]; body = strapRect(-9, 1.6, 12.2, 6.8, sc, 0.6) + strapRect(26.8, 1.6, 12.2, 6.8, sc, 0.6) + objectSVG(s, p, g, 0, 0); }
-    else { const bw = Math.min(s.width, 26), bx = (29 - bw)/2; vb = [-4, -6, 37, 32]; body = strapRect(bx, -8, bw, 36, sc) + objectSVG(s, p, g, 0, 0); }
     vb[0] = g.w/2 - CLOSE_W/2; vb[2] = CLOSE_W;
     return '<svg viewBox="' + vb.join(' ') + '" role="img" aria-label="Close-up ' + esc(byId(SHAPES_ALL, s.shape).label) + ' ' + esc(fin.label) + '"><defs>' + finishDefs(p, fin) + '</defs>' + body + '</svg>';
   }
@@ -610,31 +524,13 @@ footer p{margin:0}
     b += objectSVG(s, p, g, ox, ty);
     return '<svg viewBox="8 -6 84 158" role="img" aria-label="Tag di strap jam"><defs>' + finishDefs(p, fin) + '</defs>' + b + '</svg>';
   }
-  function realSVG(s, p){
-    const g = geom(s), fin = byId(FINISHES, s.finish), pad = 0.6;
-    const W = g.w + pad*2, H = g.h + pad*2, ruler = Math.ceil(g.w/10)*10;
-    let r = '';
-    for(let i = 0; i <= ruler; i++){
-      const x = pad + i, len = i % 10 === 0 ? 3 : i % 5 === 0 ? 2 : 1.2;
-      r += '<line x1="' + x + '" y1="' + (H+1) + '" x2="' + x + '" y2="' + (H+1+len) + '" stroke="currentColor" stroke-width="0.12"/>';
-      if(i % 10 === 0) r += '<text x="' + x + '" y="' + (H+7.2) + '" text-anchor="middle" font-family=\'"IBM Plex Mono",monospace\' font-size="2.6" fill="currentColor">' + i + '</text>';
-    }
-    const vbW = Math.max(W, ruler + pad*2) + 1, vbH = H + 9;
-    return '<svg width="' + (vbW*ppm).toFixed(1) + '" height="' + (vbH*ppm).toFixed(1) + '" viewBox="0 0 ' + vbW + ' ' + vbH + '" style="color:var(--muted)" role="img" aria-label="Tag ukuran asli"><defs>' + finishDefs(p, fin) + '</defs>' + objectSVG(s, p, g, pad, pad) + r + '</svg>';
-  }
-  function cardSVG(){
-    const W = 85.6, H = 53.98;
-    return '<svg width="' + (W*ppm + 2).toFixed(1) + '" height="' + (H*ppm + 2).toFixed(1) + '" viewBox="-0.3 -0.3 ' + (W+0.6) + ' ' + (H+0.6) + '" style="color:var(--accent)" role="img" aria-label="Kotak kalibrasi ukuran kartu"><rect x="0" y="0" width="' + W + '" height="' + H + '" rx="3.18" fill="none" stroke="currentColor" stroke-width="0.4" stroke-dasharray="2 1.2"/><text x="' + (W/2) + '" y="' + (H/2+1.2) + '" text-anchor="middle" font-family=\'"IBM Plex Mono",monospace\' font-size="3.4" fill="currentColor">85,6 x 54 mm</text></svg>';
-  }
 
   function tagSize(s){
     const g = geom(s);
-    if(s.shape === 'slot') return 'pelat ' + mm(g.w) + ' x ' + g.h + ' mm, perkiraan';
     return mm(g.w) + ' x ' + g.h + ' mm';
   }
   function sizeCheck(){
     if(st.shape === 'shoe') return {k:'ok', t:'Satu ukuran untuk semua sepatu: ' + tagSize(st) + '.'};
-    if(st.shape === 'plate') return {k:'bad', t:'Plat darurat hanya pembanding, bukan produk.'};
     const w = getW(st.watchKey);
     if(w && w.b === 'Apple') return {k:'warn', t:'Apple Watch: ukur lebar strap dulu sebelum pesan, atau pilih Shoe Tag.'};
     if(w && w.w != null && AVAILABLE_WIDTHS.indexOf(w.w) < 0) return {k:'bad', t:wname(w) + ' pakai strap ' + mm(w.w) + ' mm, belum tersedia. Pilih Shoe Tag.'};
@@ -644,7 +540,6 @@ footer p{margin:0}
     return {k:'ok', t:'Strap ' + st.width + ' mm tersedia. Ukuran tag ' + tagSize(st) + '.'};
   }
   function textCheck(){
-    if(st.shape === 'plate') return {k:'ok', t:'Teks pembanding.'};
     const L = linesFor(st), infos = L.map(l => lineInfo(st, l));
     if(infos.every(x => x.k === 'empty')) return {k:'bad', t:'Teks masih kosong.'};
     const i = infos.findIndex(x => x.k === 'bad');
@@ -803,28 +698,9 @@ footer p{margin:0}
       $('#watch-search').hidden = false;
       $('#picked').innerHTML = '';
     }
-    if(TEAM){
-      $('#tech').textContent = fitted.n ? 'Huruf ' + mm(fitted.cap) + ' mm (min 1,8, ideal 2,2) · tag ' + mm(g.w) + ' x ' + g.h + ' mm · batas ' + lim + ' karakter per baris' : 'Belum ada teks';
-      $('#width-note').textContent = 'Batas ' + lim + ' karakter per baris di lebar ini dengan font ' + byId(FONTS, st.font).label + ' (huruf minimal 1,8 mm).';
-      $('#card-wrap').innerHTML = cardSVG();
-      $('#real-wrap').innerHTML = realSVG(st, 'r');
-      $('#ppm').value = ppm;
-      renderPins();
-      renderProd();
-    }
     save(STORE, st);
   }
 
-  function renderPins(){
-    const box = $('#pins');
-    $('#pins-empty').hidden = pins.length > 0;
-    box.innerHTML = pins.map((p, i) => {
-      const fitted = fitLines(p, geom(p)), w = getW(p.watchKey);
-      return '<div class="pin">' + closeSVG(p, 'p' + i) + '<div class="meta"><b>' + esc(byId(SHAPES_ALL, p.shape).label + (isWatch(p) ? ' ' + p.width + ' mm' : '')) + '</b><span>' + esc(byId(FINISHES, p.finish).label + ' · ' + byId(FONTS, p.font).label) + '</span><span>' + esc(linesFor(p).filter(Boolean).join(' / ')) + '</span>' + (w ? '<span>' + esc(wname(w)) + '</span>' : '') + (fitted.n ? '<span>Huruf ' + mm(fitted.cap) + ' mm</span>' : '') + '<div class="row"><button type="button" class="btn small" data-load="' + i + '">Buka</button><button type="button" class="btn small" data-del="' + i + '">Hapus</button></div></div></div>';
-    }).join('');
-    box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { pins.splice(Number(b.dataset.del), 1); save(PINS, pins); renderPins(); }));
-    box.querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', () => { st = Object.assign({}, DEFAULT, JSON.parse(JSON.stringify(pins[Number(b.dataset.load)]))); renderLines(); render(); window.scrollTo({top:0, behavior:'smooth'}); }));
-  }
 
   function flash(msg){ const n = $('#order-note'); n.textContent = msg; clearTimeout(flash.t); flash.t = setTimeout(render, 2600); }
   function copyText(text, okMsg){
@@ -837,400 +713,6 @@ footer p{margin:0}
     try{ navigator.clipboard.writeText(text).then(() => flash(okMsg), fallback); }catch(e){ fallback(); }
   }
 
-  /* ---------- Rancangan produksi (tampilan tim) ----------
-     Pola datar Watch Tag selongsong: pelat lurus ditekuk 4 kali 90 derajat, celah di tengah belakang, tanpa las.
-     Semua angka perkiraan sampai diuji di sample; K-factor dikoreksi dari hasil tekuk nyata. */
-  const PROD_KEY = 'klosr.proto.prod';
-  const PROD_T = [0.6, 0.8, 1.0, 1.2, 1.5, 2.0];
-  const PROD_DEF = {t:0.8, h:3.0, c:0.2, g:2.0, cr:0.5, r:null, k:null, strap:true, multi:false};
-  const PROD_FIELDS = [
-    {k:'t', label:'Tebal pelat (isi bebas)', unit:'mm', min:0.3, max:3},
-    {k:'h', label:'Tebal strap (rongga)', unit:'mm', min:1.5, max:6},
-    {k:'c', label:'Kelonggaran lebar', unit:'mm', min:0, max:1.5},
-    {k:'g', label:'Celah belakang', unit:'mm', min:0, max:12},
-    {k:'r', label:'Radius tekuk dalam', unit:'mm', min:0, max:4, auto:true},
-    {k:'k', label:'K-factor', unit:'', min:0.2, max:0.5, auto:true},
-    {k:'cr', label:'Radius sudut potong', unit:'mm', min:0, max:3}
-  ];
-  const PROD_VIEWS = [
-    {id:'depan', label:'Depan', yaw:-28, pitch:16},
-    {id:'samping', label:'Samping', yaw:-78, pitch:10},
-    {id:'belakang', label:'Belakang', yaw:158, pitch:16},
-    {id:'ujung', label:'Ujung', yaw:-14, pitch:80}
-  ];
-  const DENSITY = 8.0; // g/cm3, SUS 316L
-  const MONO = '"IBM Plex Mono",ui-monospace,Menlo,monospace';
-  let pp = Object.assign({}, PROD_DEF, load(PROD_KEY, {}));
-  PROD_FIELDS.forEach(fd => { if(!(fd.auto && pp[fd.k] == null) && !(pp[fd.k] >= fd.min && pp[fd.k] <= fd.max)) pp[fd.k] = PROD_DEF[fd.k]; });
-  let fold = 100, view3 = {yaw:-28, pitch:16}, realFlat = false, animT = 0, raf3 = 0;
-
-  const f1 = n => (Math.round(n*10)/10).toFixed(1).replace('.', ',');
-  const f2 = n => (Math.round(n*100)/100).toFixed(2).replace('.', ',');
-  const n3 = v => +v.toFixed(3);
-  const numIn = v => { const n = parseFloat(String(v).trim().replace(',', '.')); return isFinite(n) ? n : NaN; };
-
-  function prodGeom(p, W){
-    const t = p.t, h = p.h, w = W + p.c, g = p.g;
-    const rAuto = Math.max(0, Math.min(t, h/2));
-    const r = p.r == null ? rAuto : p.r;
-    const kAuto = r <= t ? 0.43 : 0.47;
-    const K = p.k == null ? kAuto : p.k;
-    const BA = Math.PI/2*(r + K*t);
-    const a = (w - g)/2 - r, s = h - 2*r, f = w - 2*r;
-    const L = 2*a + 2*s + f + 4*BA;
-    const x1 = a + BA/2, x2 = x1 + BA + s, x3 = x2 + BA + f, x4 = x3 + BA + s;
-    return {W:W, t:t, h:h, w:w, g:g, c:p.c, cr:p.cr, r:r, rCap:p.r == null && t > h/2, K:K, BA:BA, a:a, s:s, f:f, L:L, H:FACE_H,
-      bends:[x1, x2, x3, x4], oW:w + 2*t, oT:h + 2*t, mass:L*FACE_H*t*DENSITY/1000, prevBox:W + 2*WALL - 3};
-  }
-  function prodWarn(pg){
-    const out = [];
-    if(pg.s < -0.001) out.push({k:'bad', t:'Rongga ' + f1(pg.h) + ' mm lebih tipis dari 2x radius tekuk. Kecilkan radius atau perbesar rongga.'});
-    if(pg.a < 3) out.push({k:pg.a < 1 ? 'bad' : 'warn', t:'Sayap belakang tinggal ' + f1(Math.max(0, pg.a)) + ' mm. Celah terlalu lebar, tag bisa lepas atau berputar.'});
-    if(pg.g < 0.5) out.push({k:'warn', t:'Celah di bawah 0,5 mm: ujung pelat bisa bertabrakan karena toleransi dan springback.'});
-    if(pg.rCap) out.push({k:'warn', t:'Radius tekuk dibatasi setengah rongga (' + f1(pg.r) + ' mm), lebih kecil dari tebal pelat. Sisi jadi bulat penuh; tanyakan vendor apakah aman.'});
-    if(pg.t > 1.0) out.push({k:'warn', t:'Pelat di atas 1 mm kemungkinan sulit ditekuk manual dengan jig. Perlu press atau vendor tekuk.'});
-    if(pg.mass > 5) out.push({k:'warn', t:'Berat sekitar ' + f1(pg.mass) + ' g, lewat target 5 g di spesifikasi.'});
-    if(pg.f < pg.prevBox - 0.05) out.push({k:'warn', t:'Area grafir rata ' + f1(pg.f) + ' mm, lebih sempit dari pratinjau (' + f1(pg.prevBox) + ' mm). Batas karakter di pratinjau masih memakai pelat 0,8 mm.'});
-    if(!out.length) out.push({k:'ok', t:'Parameter masuk akal. Tetap uji di sample sebelum produksi.'});
-    return out;
-  }
-  // Jalur sumbu netral penampang, dari ujung sayap kiri ke ujung sayap kanan. Muka depan tetap di tempat,
-  // panjang lengkung tiap tekukan tetap, jadi di tekuk 0% panjangnya sama dengan pola datar.
-  function stripPath(pg, p){
-    const th = Math.PI/2*p, BA = pg.BA, z0 = pg.h/2 + pg.K*pg.t;
-    const half = [{x:0, z:z0, front:true}];
-    let x = 0, z = z0, a = 0, front = true;
-    function line(len, step){
-      const k = Math.max(1, Math.ceil(len/step));
-      for(let i = 0; i < k; i++){ x += Math.cos(a)*len/k; z += Math.sin(a)*len/k; half.push({x:x, z:z, front:front}); }
-    }
-    function bend(){
-      if(th < 1e-4){ line(BA, 0.6); return; }
-      const R = BA/th, n = 6;
-      for(let i = 0; i < n; i++){
-        const a1 = a - th/n, cx = x + R*Math.sin(a), cz = z - R*Math.cos(a);
-        x = cx - R*Math.sin(a1); z = cz + R*Math.cos(a1); a = a1;
-        half.push({x:x, z:z, front:false});
-      }
-    }
-    line(Math.max(0, pg.f/2), 2.5); front = false;
-    bend(); line(Math.max(0, pg.s), 1.2); bend(); line(Math.max(0, pg.a), 2.5);
-    const left = half.slice(1).map(q => ({x:-q.x, z:q.z, front:q.front})).reverse();
-    return left.concat(half);
-  }
-
-  function dimH(x0, x1, y, label, below){
-    return '<line class="sv-dim" x1="' + n3(x0) + '" y1="' + n3(y) + '" x2="' + n3(x1) + '" y2="' + n3(y) + '"/>' +
-      '<line class="sv-dim" x1="' + n3(x0) + '" y1="' + n3(y - 0.6) + '" x2="' + n3(x0) + '" y2="' + n3(y + 0.6) + '"/>' +
-      '<line class="sv-dim" x1="' + n3(x1) + '" y1="' + n3(y - 0.6) + '" x2="' + n3(x1) + '" y2="' + n3(y + 0.6) + '"/>' +
-      '<text class="sv-txt" x="' + n3((x0 + x1)/2) + '" y="' + n3(below ? y + 1.75 : y - 0.55) + '" font-size="1.5" text-anchor="middle" font-family=\'' + MONO + '\'>' + esc(label) + '</text>';
-  }
-  function dimV(x, y0, y1, label){
-    return '<line class="sv-dim" x1="' + n3(x) + '" y1="' + n3(y0) + '" x2="' + n3(x) + '" y2="' + n3(y1) + '"/>' +
-      '<line class="sv-dim" x1="' + n3(x - 0.6) + '" y1="' + n3(y0) + '" x2="' + n3(x + 0.6) + '" y2="' + n3(y0) + '"/>' +
-      '<line class="sv-dim" x1="' + n3(x - 0.6) + '" y1="' + n3(y1) + '" x2="' + n3(x + 0.6) + '" y2="' + n3(y1) + '"/>' +
-      '<text class="sv-txt" x="' + n3(x + 0.9) + '" y="' + n3((y0 + y1)/2 + 0.5) + '" font-size="1.5" font-family=\'' + MONO + '\'>' + esc(label) + '</text>';
-  }
-  // Penampang dilihat dari ujung strap. Pelat digambar sebagai garis setebal t di sepanjang sumbu tengahnya.
-  function sectionSVG(pg, o){
-    o = o || {};
-    const fin = byId(FINISHES, st.finish), sc = byId(STRAPS, st.strap).c;
-    const t = pg.t, w = pg.w, h = pg.h, r = Math.max(0, Math.min(pg.r, h/2, w/2));
-    const m = r + t/2, yb = h/2 + t/2, xs = w/2 + t/2, hx = w/2 - r, hy = h/2 - r, gx = Math.max(0, Math.min(pg.g/2, hx));
-    const yo = h/2 + t, xo = w/2 + t;
-    const arc = (x, y) => ' A' + n3(m) + ' ' + n3(m) + ' 0 0 1 ' + n3(x) + ' ' + n3(y);
-    const d = 'M' + n3(-gx) + ' ' + n3(yb) + ' L' + n3(-hx) + ' ' + n3(yb) + arc(-xs, hy) + ' L' + n3(-xs) + ' ' + n3(-hy) + arc(-hx, -yb) +
-      ' L' + n3(hx) + ' ' + n3(-yb) + arc(xs, -hy) + ' L' + n3(xs) + ' ' + n3(hy) + arc(hx, yb) + ' L' + n3(gx) + ' ' + n3(yb);
-    const x0 = -(xo + 1.5), x1 = xo + 11.5, y0 = -(yo + 4.2), y1 = yo + 6.2;
-    const size = o.print ? 'width="' + n3((x1 - x0)*o.scale) + 'mm" height="' + n3((y1 - y0)*o.scale) + 'mm" ' : '';
-    let s = '<svg ' + size + 'viewBox="' + [x0, y0, x1 - x0, y1 - y0].map(n3).join(' ') + '" role="img" aria-label="Penampang selongsong">';
-    s += '<rect x="' + n3(-pg.W/2) + '" y="' + n3(-h/2 + 0.04) + '" width="' + n3(pg.W) + '" height="' + n3(h - 0.08) + '" rx="0.5" fill="' + sc + '" stroke="#000000" stroke-opacity=".25" stroke-width="0.06"/>';
-    s += '<path d="' + d + '" fill="none" stroke="' + fin.edge + '" stroke-width="' + n3(t + 0.14) + '"/>';
-    s += '<path d="' + d + '" fill="none" stroke="' + fin.base + '" stroke-width="' + n3(t) + '"/>';
-    s += dimH(-xo, xo, -(yo + 1.6), 'luar ' + f1(pg.oW));
-    s += '<text class="sv-sm" x="0" y="' + n3(yo + 1.7) + '" font-size="1.25" text-anchor="middle">celah ' + f1(pg.g) + '</text>';
-    s += dimH(-w/2, w/2, yo + 3.0, 'dalam ' + f1(w), true);
-    [['rongga ' + f1(h), -1.6], ['tebal ' + f1(t), 0.2], ['R' + f1(pg.r), 2.0]].forEach(q => {
-      s += '<text class="sv-txt" x="' + n3(xo + 1.4) + '" y="' + n3(q[1] + 0.45) + '" font-size="1.35" font-family=\'' + MONO + '\'>' + q[0] + '</text>';
-    });
-    return s + '</svg>';
-  }
-  // Pola datar: yang dipotong vendor. Garis tekuk hanya penanda untuk jig kita.
-  function flatSVG(pg, o){
-    o = o || {};
-    const L = pg.L, H = pg.H, cr = Math.max(0, Math.min(pg.cr, H/2, L/2)), b = pg.bends;
-    const x0 = -2.5, y0 = -5.2, vw = L + 9.5, vh = H + 14.6;
-    const size = o.print ? 'width="' + n3(vw) + 'mm" height="' + n3(vh) + 'mm" ' : o.real ? 'width="' + (vw*ppm).toFixed(1) + '" height="' + (vh*ppm).toFixed(1) + '" ' : '';
-    let s = '<svg ' + size + 'viewBox="' + [x0, y0, vw, vh].map(n3).join(' ') + '" role="img" aria-label="Pola datar ' + f1(L) + ' x ' + f1(H) + ' mm">';
-    const fx0 = b[1] + pg.BA/2, fx1 = b[2] - pg.BA/2;
-    if(fx1 > fx0) s += '<rect class="sv-face" x="' + n3(fx0) + '" y="0" width="' + n3(fx1 - fx0) + '" height="' + H + '"/><text class="sv-sm" x="' + n3((fx0 + fx1)/2) + '" y="' + n3(H/2 + 0.45) + '" font-size="1.3" text-anchor="middle">muka depan · grafir</text>';
-    s += '<rect class="sv-cut" x="0" y="0" width="' + n3(L) + '" height="' + H + '" rx="' + n3(cr) + '"/>';
-    b.forEach((x, i) => {
-      const ty = H + 3.1 + (i % 2)*2.3;
-      s += '<line class="sv-bend" x1="' + n3(x) + '" y1="-0.9" x2="' + n3(x) + '" y2="' + n3(H + 0.9) + '"/>';
-      s += '<line class="sv-dim" x1="' + n3(x) + '" y1="' + n3(H + 1.1) + '" x2="' + n3(x) + '" y2="' + n3(ty - 1.3) + '"/><text class="sv-txt" x="' + n3(x) + '" y="' + n3(ty) + '" font-size="1.5" text-anchor="middle" font-family=\'' + MONO + '\'>' + f1(x) + '</text>';
-    });
-    s += dimH(0, L, -2.4, f1(L) + ' mm');
-    s += dimV(L + 1.6, 0, H, f1(H));
-    s += '<text class="sv-sm" x="0" y="' + n3(H + 8.4) + '" font-size="1.2">Garis putus-putus = garis tekuk, diukur dari tepi kiri. Jangan dipotong.</text>';
-    return s + '</svg>';
-  }
-
-  const hexrgb = hx => { const n = parseInt(hx.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
-  const mixa = (A, B, k) => { k = Math.max(0, Math.min(1, k)); return A.map((v, i) => v + (B[i] - v)*k); };
-  const rgbs = A => 'rgb(' + A.map(v => Math.round(v)).join(',') + ')';
-  const v3norm = a => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0]/l, a[1]/l, a[2]/l]; };
-  const v3dot = (a, b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
-  const LV3 = v3norm([-0.35, 0.6, 0.72]), HV3 = v3norm([LV3[0], LV3[1], LV3[2] + 1]);
-
-  // 3D tanpa library: proyeksi ortografis, bidang kecil diurutkan dari yang terjauh (painter's algorithm).
-  function draw3D(){
-    const box = $('#p3d'); if(!box) return;
-    const pg = prodGeom(pp, st.width), fin = byId(FINISHES, st.finish);
-    if(pg.s < -0.001 || pg.a < 0){ box.innerHTML = '<p class="note p3d-msg">Bentuk ini tidak bisa ditekuk. Cek peringatan di atas.</p>'; return; }
-    const path = stripPath(pg, fold/100), N = path.length, t = pg.t, K = pg.K, H = pg.H;
-    const pts = path.map((q, i) => {
-      const a = path[Math.max(0, i - 1)], b = path[Math.min(N - 1, i + 1)];
-      const d = v3norm([b.x - a.x, 0, b.z - a.z]), nx = d[2], nz = -d[0];
-      return {front:q.front, ix:q.x + K*t*nx, iz:q.z + K*t*nz, ox:q.x - (1 - K)*t*nx, oz:q.z - (1 - K)*t*nz, dx:d[0], dz:d[2]};
-    });
-    const yr = view3.yaw*Math.PI/180, pr = view3.pitch*Math.PI/180, cy = Math.cos(yr), sy = Math.sin(yr), cp = Math.cos(pr), sp = Math.sin(pr);
-    const M = [[cy, 0, sy], [sp*sy, cp, -sp*cy], [-cp*sy, sp, cp*cy]];
-    const tf = q => [M[0][0]*q[0] + M[0][1]*q[1] + M[0][2]*q[2], M[1][0]*q[0] + M[1][1]*q[1] + M[1][2]*q[2], M[2][0]*q[0] + M[2][1]*q[1] + M[2][2]*q[2]];
-    const metalLo = hexrgb(fin.lo), metalHi = hexrgb(fin.hi), S = hexrgb(byId(STRAPS, st.strap).c), Sd = mixa(S, [0, 0, 0], 0.62);
-    const items = []; let rad = 0;
-    // Lapisan 0 digambar dulu: strap di dalam rongga selalu tertutup selongsong dari luar.
-    function quad(q4, nrm, kind, tag, layer){
-      q4.forEach(q => { rad = Math.max(rad, Math.hypot(q[0], q[1], q[2])); });
-      const nv = tf(nrm);
-      if(nv[2] <= 1e-6) return;
-      const v = q4.map(tf), li = Math.max(0, v3dot(nv, LV3));
-      let col;
-      if(kind === 'metal') col = mixa(mixa(metalLo, metalHi, 0.12 + 0.88*li), [255, 255, 255], Math.pow(Math.max(0, v3dot(nv, HV3)), 28)*0.65);
-      else col = mixa(Sd, S, 0.25 + 0.75*li);
-      items.push({v:v, d:(v[0][2] + v[1][2] + v[2][2] + v[3][2])/4, fill:rgbs(col), tag:tag, l:layer == null ? 1 : layer});
-    }
-    const y0 = -H/2, y2 = H/2, rows = [[y0, 0], [0, y2]], strapOn = pp.strap && fold >= 99;
-    for(let i = 0; i < N - 1; i++){
-      const A = pts[i], B = pts[i + 1];
-      const d = v3norm([B.ox - A.ox + B.ix - A.ix, 0, B.oz - A.oz + B.iz - A.iz]), nin = [d[2], 0, -d[0]], nout = [-d[2], 0, d[0]];
-      const isFront = A.front && B.front;
-      rows.forEach(r => {
-        if(!isFront) quad([[A.ox, r[0], A.oz], [B.ox, r[0], B.oz], [B.ox, r[1], B.oz], [A.ox, r[1], A.oz]], nout, 'metal');
-        if(!strapOn) quad([[A.ix, r[0], A.iz], [B.ix, r[0], B.iz], [B.ix, r[1], B.iz], [A.ix, r[1], A.iz]], nin, 'metal');
-      });
-      [[y2, [0, 1, 0]], [y0, [0, -1, 0]]].forEach(e => quad([[A.ox, e[0], A.oz], [B.ox, e[0], B.oz], [B.ix, e[0], B.iz], [A.ix, e[0], A.iz]], e[1], 'metal'));
-    }
-    const fr = pts.filter(q => q.front), FL = fr[0], FR = fr[fr.length - 1];
-    quad([[FL.ox, y0, FL.oz], [FR.ox, y0, FR.oz], [FR.ox, y2, FR.oz], [FL.ox, y2, FL.oz]], [0, 0, 1], 'metal', 'front');
-    const E0 = pts[0], E1 = pts[N - 1];
-    quad([[E0.ox, y0, E0.oz], [E0.ix, y0, E0.iz], [E0.ix, y2, E0.iz], [E0.ox, y2, E0.oz]], [-E0.dx, 0, -E0.dz], 'metal');
-    quad([[E1.ox, y0, E1.oz], [E1.ix, y0, E1.iz], [E1.ix, y2, E1.iz], [E1.ox, y2, E1.oz]], [E1.dx, 0, E1.dz], 'metal');
-    if(strapOn){
-      const Wh = pg.W/2, hz = pg.h/2 - 0.05, ext = 13;
-      [[y0 - ext, y0], [y0, y2], [y2, y2 + ext]].forEach((rg, ri) => {
-        const ly = ri === 1 ? 0 : 1;
-        const k = Math.max(1, Math.ceil((rg[1] - rg[0])/2.6));
-        for(let j = 0; j < k; j++){
-          const a = rg[0] + (rg[1] - rg[0])*j/k, b = rg[0] + (rg[1] - rg[0])*(j + 1)/k;
-          quad([[-Wh, a, hz], [Wh, a, hz], [Wh, b, hz], [-Wh, b, hz]], [0, 0, 1], 'strap', null, ly);
-          quad([[-Wh, a, -hz], [Wh, a, -hz], [Wh, b, -hz], [-Wh, b, -hz]], [0, 0, -1], 'strap', null, ly);
-          quad([[-Wh, a, -hz], [-Wh, a, hz], [-Wh, b, hz], [-Wh, b, -hz]], [-1, 0, 0], 'strap', null, ly);
-          quad([[Wh, a, -hz], [Wh, a, hz], [Wh, b, hz], [Wh, b, -hz]], [1, 0, 0], 'strap', null, ly);
-        }
-      });
-      quad([[-Wh, y2 + ext, -hz], [Wh, y2 + ext, -hz], [Wh, y2 + ext, hz], [-Wh, y2 + ext, hz]], [0, 1, 0], 'strap');
-      quad([[-Wh, y0 - ext, -hz], [Wh, y0 - ext, -hz], [Wh, y0 - ext, hz], [-Wh, y0 - ext, hz]], [0, -1, 0], 'strap');
-    }
-    let textG = '';
-    if(fold >= 99){
-      const ws = Object.assign({}, st, {shape:'watch'}), gw = geom(ws), fl = fitLines(ws, gw), zF = pg.h/2 + t + 0.02;
-      const mtx = [M[0][0], -M[1][0], -M[0][1], M[1][1], -M[0][0]*gw.w/2 + M[0][1]*H/2 + M[0][2]*zF, M[1][0]*gw.w/2 - M[1][1]*H/2 - M[1][2]*zF];
-      textG = '<g transform="matrix(' + mtx.map(v => v.toFixed(5)).join(' ') + ')">' + textEls(fl, byId(FONTS, st.font), gw.w/2, gw.top, gw.boxH, fin.ink) + '</g>';
-    }
-    items.sort((p1, p2) => (p1.l - p2.l) || (p1.d - p2.d));
-    const R = Math.max(10, rad)*1.04, AR = 1.45;
-    let s = '<svg viewBox="' + [-R*AR, -R, 2*R*AR, 2*R].map(v => v.toFixed(2)).join(' ') + '" role="img" aria-label="Model 3D selongsong, tekuk ' + fold + ' persen">';
-    items.forEach(it => {
-      s += '<path d="M' + it.v.map(q => q[0].toFixed(2) + ' ' + (-q[1]).toFixed(2)).join('L') + 'Z" fill="' + it.fill + '" stroke="' + it.fill + '" stroke-width="0.06" stroke-linejoin="round"/>';
-      if(it.tag === 'front') s += textG;
-    });
-    box.innerHTML = s + '</svg>';
-  }
-  function draw3Dsoon(){ cancelAnimationFrame(raf3); raf3 = requestAnimationFrame(draw3D); }
-  function setFold(v){ fold = Math.max(0, Math.min(100, Math.round(v))); $('#p-fold').value = fold; $('#p-fold-v').textContent = fold + '%'; }
-  function animateFold(){
-    cancelAnimationFrame(animT);
-    const t0 = performance.now(), ease = k => k < 0.5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
-    const step = now => { const k = Math.min(1, (now - t0)/2600); setFold(ease(k)*100); draw3D(); if(k < 1) animT = requestAnimationFrame(step); };
-    setFold(0); animT = requestAnimationFrame(step);
-  }
-
-  function prodWidths(){ return pp.multi ? AVAILABLE_WIDTHS.slice() : [st.width]; }
-  function thickTable(W){
-    const rows = PROD_T.slice(); if(rows.indexOf(pp.t) < 0) rows.push(pp.t); rows.sort((a, b) => a - b);
-    return '<table class="tbl"><thead><tr><th>Tebal</th><th>Radius</th><th>Pola datar</th><th>Luar (L x T)</th><th>Area grafir</th><th>Berat</th><th>Catatan</th></tr></thead><tbody>' + rows.map(t => {
-      const g = prodGeom(Object.assign({}, pp, {t:t}), W), notes = [];
-      if(g.s < -0.001) notes.push('rongga terlalu tipis');
-      if(g.rCap) notes.push('radius dibatasi rongga');
-      if(t > 1.0) notes.push('sulit ditekuk manual');
-      if(g.mass > 5) notes.push('lewat 5 g');
-      return '<tr' + (t === pp.t ? ' class="cur"' : '') + '><td class="num">' + f1(t) + '</td><td class="num">' + f1(g.r) + '</td><td class="num">' + f1(g.L) + ' x ' + f1(g.H) + '</td><td class="num">' + f1(g.oW) + ' x ' + f1(g.oT) + '</td><td class="num">' + f1(g.f) + '</td><td class="num">' + f1(g.mass) + ' g</td><td>' + (notes.join(', ') || 'ok') + '</td></tr>';
-    }).join('') + '</tbody></table>';
-  }
-  function widthTable(){
-    return '<table class="tbl"><thead><tr><th>Strap</th><th>Pola datar</th><th>Garis tekuk dari kiri</th><th>Luar (L x T)</th><th>Rongga = mandrel</th><th>Berat</th></tr></thead><tbody>' + WIDTHS_ALL.map(W => {
-      const g = prodGeom(pp, W);
-      return '<tr' + (W === st.width ? ' class="cur"' : '') + '><td class="num">' + W + ' mm' + (AVAILABLE_WIDTHS.indexOf(W) < 0 ? ' <span class="tagchip soon">Segera</span>' : '') + '</td><td class="num">' + f1(g.L) + ' x ' + f1(g.H) + '</td><td class="num">' + g.bends.map(f1).join(' / ') + '</td><td class="num">' + f1(g.oW) + ' x ' + f1(g.oT) + '</td><td class="num">' + f1(g.w) + ' x ' + f1(g.h) + ' R' + f1(g.r) + '</td><td class="num">' + f1(g.mass) + ' g</td></tr>';
-    }).join('') + '</tbody></table>';
-  }
-  function vendorSpecText(){
-    const gs = prodWidths().map(W => prodGeom(pp, W)), g0 = gs[0];
-    const L = ['Permintaan potong laser: tag untuk strap jam (Klosr Watch Tag)', '',
-      '- Bahan: stainless steel SUS 316L, tebal ' + f1(pp.t) + ' mm',
-      '- Bentuk: pelat datar persegi panjang, 4 sudut dibulatkan R' + f1(pp.cr) + ' mm',
-      '- Ukuran potong (panjang x lebar):'];
-    gs.forEach(g => L.push('  untuk strap ' + g.W + ' mm: ' + f1(g.L) + ' x ' + f1(g.H) + ' mm'));
-    L.push('- File DXF terlampir, isinya hanya garis potong, satuan mm',
-      '- Toleransi potong: +/- 0,1 mm',
-      '- Arah serat (rol) pelat searah panjang potongan',
-      '- Tepi bebas burr dan tidak tajam',
-      '- Jumlah: [isi] pcs per ukuran', '',
-      'Penekukan kami kerjakan sendiri. Kalau bisa menekuk juga, mohon info harganya. Spesifikasi tekuk: 4 tekukan 90 derajat ke arah yang sama, radius dalam ' + f1(g0.r) + ' mm, celah ' + f1(g0.g) + ' mm di tengah belakang, tanpa las. Rongga dalam dan posisi garis tekuk dari tepi kiri:');
-    gs.forEach(g => L.push('  strap ' + g.W + ' mm: rongga ' + f1(g.w) + ' x ' + f1(g.h) + ' mm, tekuk di ' + g.bends.map(f1).join(' / ') + ' mm'));
-    return L.join('\n');
-  }
-  function dxfText(){
-    const out = ['0', 'SECTION', '2', 'HEADER', '9', '$ACADVER', '1', 'AC1009', '9', '$INSUNITS', '70', '4', '9', '$MEASUREMENT', '70', '1', '0', 'ENDSEC', '0', 'SECTION', '2', 'ENTITIES'];
-    const n = v => (Math.round(v*10000)/10000).toFixed(4);
-    const line = (xa, ya, xb, yb) => out.push('0', 'LINE', '8', 'CUT', '10', n(xa), '20', n(ya), '30', '0.0', '11', n(xb), '21', n(yb), '31', '0.0');
-    const arc = (cx, cy, r, a0, a1) => out.push('0', 'ARC', '8', 'CUT', '10', n(cx), '20', n(cy), '30', '0.0', '40', n(r), '50', n(a0), '51', n(a1));
-    prodWidths().forEach((W, i) => {
-      const g = prodGeom(pp, W), L = g.L, H = g.H, r = Math.max(0, Math.min(g.cr, H/2, L/2)), y = i*(H + 5);
-      if(r > 0.001){
-        line(r, y, L - r, y); arc(L - r, y + r, r, 270, 360);
-        line(L, y + r, L, y + H - r); arc(L - r, y + H - r, r, 0, 90);
-        line(L - r, y + H, r, y + H); arc(r, y + H - r, r, 90, 180);
-        line(0, y + H - r, 0, y + r); arc(r, y + r, r, 180, 270);
-      } else { line(0, y, L, y); line(L, y, L, y + H); line(L, y + H, 0, y + H); line(0, y + H, 0, y); }
-    });
-    out.push('0', 'ENDSEC', '0', 'EOF');
-    return out.join('\r\n') + '\r\n';
-  }
-  function downloadText(name, text, type){
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([text], {type:type}));
-    a.download = name; document.body.appendChild(a); a.click();
-    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-  }
-  function rulerSVG(){
-    let s = '<svg width="54mm" height="7mm" viewBox="-2 -1 54 7" role="img" aria-label="Garis cek 50 mm"><line x1="0" y1="2" x2="50" y2="2" stroke="#000000" stroke-width="0.3"/>';
-    for(let i = 0; i <= 50; i += 10) s += '<line x1="' + i + '" y1="0.5" x2="' + i + '" y2="3.5" stroke="#000000" stroke-width="0.25"/><text x="' + i + '" y="6" font-size="2" text-anchor="middle" font-family="Arial,sans-serif">' + i + '</text>';
-    return s + '</svg>';
-  }
-  function printSheet(){
-    const ws = prodWidths(), gs = prodGeom(pp, st.width);
-    let h = '<h1>Klosr Watch Tag: pola datar skala 1:1</h1>';
-    h += '<p>Bahan SUS 316L tebal ' + f1(pp.t) + ' mm, sudut potong R' + f1(pp.cr) + ' mm. Rongga ' + f1(pp.h) + ' mm, kelonggaran lebar ' + f1(pp.c) + ' mm, celah belakang ' + f1(pp.g) + ' mm, radius tekuk dalam ' + f1(gs.r) + ' mm, K ' + f2(gs.K) + '. Tanpa las. Angka perkiraan sampai diuji di sample.</p>';
-    h += '<p>Cetak di skala 100% (matikan "sesuaikan ke halaman"). Cek dengan penggaris: garis di bawah ini harus tepat 50 mm.</p>' + rulerSVG();
-    ws.forEach(W => {
-      const g = prodGeom(pp, W);
-      h += '<section><h2>Strap ' + W + ' mm: potong ' + f1(g.L) + ' x ' + f1(g.H) + ' mm</h2>' + flatSVG(g, {print:true}) +
-        '<p>Garis tekuk dari kiri: ' + g.bends.map(f1).join(' / ') + ' mm. Rongga (ukuran mandrel jig) ' + f1(g.w) + ' x ' + f1(g.h) + ' mm, sudut R' + f1(g.r) + '. Ukuran luar jadi ' + f1(g.oW) + ' x ' + f1(g.oT) + ' x ' + f1(g.H) + ' mm. Berat sekitar ' + f1(g.mass) + ' g.</p></section>';
-    });
-    h += '<section><h2>Penampang strap ' + st.width + ' mm (skala 2:1)</h2>' + sectionSVG(gs, {print:true, scale:2}) + '</section>';
-    $('#print-sheet').innerHTML = h;
-    document.body.classList.add('printing');
-    const done = () => { document.body.classList.remove('printing'); window.removeEventListener('afterprint', done); };
-    window.addEventListener('afterprint', done);
-    window.print();
-  }
-  function prodCopy(text){
-    const note = $('#p-note');
-    const ok = () => { note.textContent = 'Spesifikasi disalin. Tempel di chat vendor, lalu lampirkan file DXF.'; };
-    const fail = () => { $('#p-spec-box').open = true; note.textContent = 'Tidak bisa menyalin otomatis. Salin dari kotak teks di bawah.'; };
-    const fb = () => {
-      const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
-      document.body.appendChild(ta); ta.select();
-      try{ if(document.execCommand('copy')) ok(); else fail(); }catch(e){ fail(); }
-      ta.remove();
-    };
-    try{ navigator.clipboard.writeText(text).then(ok, fb); }catch(e){ fb(); }
-  }
-
-  function syncProdFields(){
-    PROD_FIELDS.forEach(fd => {
-      const inp = document.getElementById('pf-' + fd.k);
-      inp.value = pp[fd.k] == null ? '' : (fd.k === 'k' ? f2(pp[fd.k]) : f1(pp[fd.k]));
-      inp.classList.remove('bad');
-    });
-  }
-  function prodChanged(sync){ save(PROD_KEY, pp); if(sync) syncProdFields(); renderProd(); }
-  function renderProd(){
-    if(!TEAM) return;
-    const W = st.width, pg = prodGeom(pp, W), warns = prodWarn(pg), bad = warns.some(w => w.k === 'bad');
-    segButtons($('#pw-seg'), WIDTHS_ALL.map(w => ({id:String(w), w:w})), String(W), id => { st.width = Number(id); renderLines(); render(); }, it => '<span class="mono">' + it.w + ' mm</span>' + (AVAILABLE_WIDTHS.indexOf(it.w) < 0 ? '<span class="tagchip soon">Segera</span>' : ''));
-    segButtons($('#pt-seg'), PROD_T.map(t => ({id:String(t), t:t})), String(pp.t), id => { pp.t = Number(id); prodChanged(true); }, it => '<span class="mono">' + f1(it.t) + '</span>');
-    PROD_FIELDS.forEach(fd => {
-      if(!fd.auto) return;
-      const inp = document.getElementById('pf-' + fd.k), badge = document.getElementById('pf-' + fd.k + '-a'), isAuto = pp[fd.k] == null;
-      inp.placeholder = isAuto ? (fd.k === 'r' ? f1(pg.r) : f2(pg.K)) : '';
-      badge.textContent = isAuto ? 'otomatis' : 'manual';
-      badge.classList.toggle('man', !isAuto);
-    });
-    $('#p-key').innerHTML = '<div><div class="minilabel">Potong datar (mentahan) untuk strap ' + W + ' mm</div><div class="bignum">' + f1(pg.L) + ' x ' + f1(pg.H) + ' mm</div></div>' +
-      '<dl class="kv">' +
-      '<dt>Garis tekuk dari kiri</dt><dd>' + pg.bends.map(f1).join(' · ') + ' mm</dd>' +
-      '<dt>Ukuran luar jadi</dt><dd>' + f1(pg.oW) + ' x ' + f1(pg.oT) + ' x ' + f1(pg.H) + ' mm (lebar x tebal x tinggi)</dd>' +
-      '<dt>Rongga = mandrel jig</dt><dd>' + f1(pg.w) + ' x ' + f1(pg.h) + ' mm, sudut R' + f1(pg.r) + '</dd>' +
-      '<dt>Area grafir rata</dt><dd>' + f1(pg.f) + ' x ' + f1(pg.H) + ' mm</dd>' +
-      '<dt>Berat</dt><dd>sekitar ' + f1(pg.mass) + ' g</dd>' +
-      '<dt>Dasar hitungan</dt><dd>K ' + f2(pg.K) + ' · lengkung ' + f2(pg.BA) + ' mm per tekukan</dd>' +
-      '</dl>';
-    $('#p-warn').innerHTML = warns.map(c => '<div class="ck ' + c.k + '"><span class="ck-i">' + (c.k === 'ok' ? '✓' : c.k === 'warn' ? '!' : '✕') + '</span><span>' + esc(c.t) + '</span></div>').join('');
-    $('#p-sec').innerHTML = sectionSVG(pg);
-    $('#p-flat').innerHTML = flatSVG(pg, {real:realFlat});
-    $('#p-flat').classList.toggle('real', realFlat);
-    $('#p-tw').textContent = W;
-    $('#p-wt').textContent = f1(pp.t);
-    $('#p-tab-t').innerHTML = thickTable(W);
-    $('#p-tab-w').innerHTML = widthTable();
-    segButtons($('#p-multi'), [{id:'one', label:'Lebar ' + W + ' mm saja'}, {id:'mvp', label:'20, 22, 26 mm'}], pp.multi ? 'mvp' : 'one', id => { pp.multi = id === 'mvp'; prodChanged(false); }, it => esc(it.label));
-    ['#p-dxf', '#p-print', '#p-copy'].forEach(sel => { $(sel).disabled = bad; });
-    $('#p-spec').textContent = vendorSpecText();
-    draw3D();
-  }
-  function initProd(){
-    $('#p-fields').innerHTML = PROD_FIELDS.map(fd => '<div class="field"><label for="pf-' + fd.k + '"><span>' + esc(fd.label) + '</span>' + (fd.auto ? '<span class="auto" id="pf-' + fd.k + '-a"></span>' : '') + '</label><div class="inunit"><input type="text" inputmode="decimal" id="pf-' + fd.k + '" data-k="' + fd.k + '" autocomplete="off" spellcheck="false"><span>' + fd.unit + '</span></div></div>').join('');
-    syncProdFields();
-    $('#p-fields').addEventListener('input', e => {
-      const inp = e.target, k = inp.dataset && inp.dataset.k; if(!k) return;
-      const fd = PROD_FIELDS.find(x => x.k === k), raw = inp.value.trim();
-      if(fd.auto && raw === ''){ pp[k] = null; inp.classList.remove('bad'); prodChanged(false); return; }
-      const v = numIn(raw);
-      if(!(v >= fd.min && v <= fd.max)){ inp.classList.add('bad'); return; }
-      inp.classList.remove('bad'); pp[k] = v; prodChanged(false);
-    });
-    $('#p-reset').addEventListener('click', () => { pp = Object.assign({}, PROD_DEF, {strap:pp.strap, multi:pp.multi}); prodChanged(true); });
-    segButtons($('#p-views'), PROD_VIEWS, '', id => { const v = byId(PROD_VIEWS, id); view3 = {yaw:v.yaw, pitch:v.pitch}; draw3D(); }, it => esc(it.label));
-    $('#p-fold').addEventListener('input', e => { cancelAnimationFrame(animT); setFold(Number(e.target.value)); draw3Dsoon(); });
-    $('#p-anim').addEventListener('click', animateFold);
-    $('#p-strap').checked = !!pp.strap;
-    $('#p-strap').addEventListener('change', e => { pp.strap = e.target.checked; save(PROD_KEY, pp); draw3D(); });
-    $('#p-real').addEventListener('change', e => { realFlat = e.target.checked; renderProd(); });
-    $('#p-dxf').addEventListener('click', () => { downloadText('klosr-watchtag-' + prodWidths().join('-') + 'mm-tebal' + f1(pp.t).replace(',', '.') + '-potong.dxf', dxfText(), 'application/dxf'); $('#p-note').textContent = 'DXF diunduh. Isinya hanya garis potong.'; });
-    $('#p-print').addEventListener('click', printSheet);
-    $('#p-copy').addEventListener('click', () => prodCopy(vendorSpecText()));
-    const box = $('#p3d'); let drag = null;
-    box.addEventListener('pointerdown', e => { drag = {x:e.clientX, y:e.clientY, yaw:view3.yaw, pitch:view3.pitch}; try{ box.setPointerCapture(e.pointerId); }catch(err){} });
-    box.addEventListener('pointermove', e => {
-      if(!drag) return;
-      view3 = {yaw:drag.yaw + (e.clientX - drag.x)*0.6, pitch:Math.max(-85, Math.min(85, drag.pitch + (e.clientY - drag.y)*0.5))};
-      draw3Dsoon();
-    });
-    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => box.addEventListener(ev, () => { drag = null; }));
-    setFold(fold);
-  }
 
   $('#watch-q').addEventListener('input', () => { activeIdx = -1; renderResults(); });
   $('#watch-q').addEventListener('keydown', e => {
@@ -1255,35 +737,12 @@ footer p{margin:0}
     if(WA_NUMBER){ window.location.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text); return; }
     copyText(text, 'Teks pesanan disalin. Tempel di chat WhatsApp Klosr.');
   });
-  $('#pin-btn').addEventListener('click', () => {
-    if(pins.length >= 6){ flash('Perbandingan penuh. Hapus satu dulu.'); return; }
-    pins.push(JSON.parse(JSON.stringify(st))); save(PINS, pins); renderPins(); flash('Tersimpan di perbandingan.');
-  });
-  $('#ppm').addEventListener('input', e => { ppm = Number(e.target.value); save(PPM, ppm); $('#card-wrap').innerHTML = cardSVG(); $('#real-wrap').innerHTML = realSVG(st, 'r'); if(realFlat) renderProd(); });
-  if(TEAM){
-    const vs = $('#view-switch'); vs.hidden = false;
-    vs.querySelectorAll('button').forEach(b => {
-      b.setAttribute('aria-pressed', String(b.dataset.v === 'tim'));
-      b.addEventListener('click', () => { location.hash = b.dataset.v === 'tim' ? 'tim' : ''; });
-    });
-  }
-  let wakeLock = null;
-  $('#wake').addEventListener('change', async e => {
-    const note = $('#wake-note');
-    try{
-      if(e.target.checked){ wakeLock = await navigator.wakeLock.request('screen'); note.textContent = 'Aktif selama halaman terbuka'; wakeLock.addEventListener('release', () => { $('#wake').checked = false; note.textContent = ''; }); }
-      else if(wakeLock){ await wakeLock.release(); wakeLock = null; note.textContent = ''; }
-    }catch(err){ e.target.checked = false; note.textContent = 'Perangkat ini menolak. Atur lewat setelan layar.'; }
-  });
-
-  if(TEAM) initProd();
   renderLines();
   render();
   fetch('lebar-strap-jam.csv', {cache:'no-cache'})
     .then(r => { if(!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
     .then(t => {
       setData(t);
-      if(TEAM){ const brands = {}; WL.forEach(w => { brands[w.b] = 1; }); $('#data-note').textContent = WL.length + ' model dari ' + Object.keys(brands).length + ' merek.'; $('#data-note').hidden = false; }
       renderResults(); render();
     })
     .catch(() => {
