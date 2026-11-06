@@ -1,8 +1,10 @@
-# Konfigurator LifeTag
+# Konfigurator Klosr
 
 Halaman mockup tag grafir untuk strap jam dan tali sepatu. Cari model jam supaya lebar strap terisi otomatis, ketik teks, ganti bentuk, finishing, dan font, lalu cek tinggi huruf dan ukuran asli di layar.
 
-Buka di laptop atau HP: https://enow20.github.io/lifetag-konfigurator/
+Buka di laptop atau HP: https://enow20.github.io/klosr-konfigurator/
+
+Repo ini dulu bernama `lifetag-konfigurator`. Link lama (`/lifetag-konfigurator/`) sudah tidak berlaku. Kalau sudah dipasang di layar utama HP, hapus lalu pasang lagi dari link baru.
 
 Tampilan tim (alat internal untuk wawancara: bentuk usulan, plat pembanding, sumber data, detail teknis, perbandingan, ukuran asli) dibuka lewat link yang sama dengan akhiran `#tim`.
 

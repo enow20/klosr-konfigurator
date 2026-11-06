@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#D24E0E">
-<title>Konfigurator LifeTag</title>
+<title>Konfigurator Klosr</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -139,8 +139,8 @@ footer p{margin:0}
 <div class="wrap">
   <header class="top">
     <div>
-      <div class="eyebrow">LifeTag · tag grafir untuk pelari</div>
-      <h1>Konfigurator LifeTag</h1>
+      <div class="eyebrow">Klosr · tag grafir untuk pelari</div>
+      <h1>Konfigurator Klosr</h1>
       <p class="sub">Cari jam kamu, ketik teks, pilih finishing, lalu salin teks pesanan.</p>
     </div>
     <div class="row team-only">
@@ -295,6 +295,7 @@ footer p{margin:0}
   ];
   const PLATE_DEFAULT = ['NAMA LENGKAP','JAKARTA 1990','GOL. DARAH O+','ALERGI: TIDAK ADA','ICE: NAMA 08XX XXXX XXXX','ICE: NAMA 08XX XXXX XXXX'];
   const DEFAULT = {shape:'watch', width:22, watchKey:null, finish:'brushed', font:'barlow', strap:'black', two:true, upper:true, watchLines:['SUB 4','JRF 2026'], shoeLine:'KAMU BISA', plateLines:PLATE_DEFAULT.slice(), focusLine:0};
+  // Kunci penyimpanan sengaja tetap memakai nama lama (LifeTag) supaya perbandingan dan kalibrasi yang sudah tersimpan di HP tidak hilang.
   const STORE = 'lifetag.proto.state', PINS = 'lifetag.proto.pins', PPM = 'lifetag.proto.ppm';
 
   function norm(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
@@ -669,7 +670,7 @@ footer p{margin:0}
     const canOrder = checks.every(c => c.k !== 'bad');
     $('#order-btn').disabled = !canOrder;
     $('#order-btn').textContent = WA_NUMBER ? 'Pesan via WhatsApp' : 'Salin teks pesanan';
-    $('#order-note').textContent = canOrder ? (WA_NUMBER ? '' : 'Tempel di chat WhatsApp LifeTag.') : 'Perbaiki yang bertanda ✕ dulu.';
+    $('#order-note').textContent = canOrder ? (WA_NUMBER ? '' : 'Tempel di chat WhatsApp Klosr.') : 'Perbaiki yang bertanda ✕ dulu.';
     $('#order-msg').textContent = orderText();
     const w = getW(st.watchKey);
     if(w){
@@ -735,7 +736,7 @@ footer p{margin:0}
     if($('#order-btn').disabled) return;
     const text = orderText();
     if(WA_NUMBER){ window.location.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text); return; }
-    copyText(text, 'Teks pesanan disalin. Tempel di chat WhatsApp LifeTag.');
+    copyText(text, 'Teks pesanan disalin. Tempel di chat WhatsApp Klosr.');
   });
   $('#pin-btn').addEventListener('click', () => {
     if(pins.length >= 6){ flash('Perbandingan penuh. Hapus satu dulu.'); return; }
