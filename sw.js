@@ -1,4 +1,4 @@
-const CACHE = 'klosr-konfigurator-v4';
+const CACHE = 'klosr-konfigurator-v5';
 const CORE = ['./', './index.html', './lebar-strap-jam.csv', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
