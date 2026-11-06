@@ -8,6 +8,8 @@ Repo ini dulu bernama `lifetag-konfigurator`. Link lama (`/lifetag-konfigurator/
 
 Tampilan tim (alat internal untuk wawancara: bentuk usulan, plat pembanding, sumber data, detail teknis, perbandingan, ukuran asli) dibuka lewat link yang sama dengan akhiran `#tim`.
 
+Tampilan tim juga memuat **Rancangan produksi** Watch Tag selongsong: ukuran potong datar yang sudah memperhitungkan 4 tekukan, posisi garis tekuk, penampang, 3D dengan animasi tekuk, pengaruh tebal pelat, unduh DXF potong (hanya garis potong), cetak pola skala 1:1, dan teks spesifikasi untuk vendor potong. Angkanya perkiraan sampai diuji dengan sample; K-factor bisa dikoreksi dari hasil tekuk nyata.
+
 Tidak perlu login. Setelah sekali dibuka, halaman tetap jalan tanpa sinyal. Di HP bisa dipasang ke layar utama lewat menu browser ("Tambahkan ke layar utama" atau "Add to Home Screen").
 
 ## Isi repo
